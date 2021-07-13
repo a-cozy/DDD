@@ -1,0 +1,85 @@
+﻿using CommonService.ImageToData;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+//using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+
+namespace MainModel
+{
+    public class LoadImager : ILoadImager
+    {
+        public BitmapImage DispImage { get; private set; }
+
+        public string ImgPath { get; private set; }
+        /// <summary>
+        /// 読込完了
+        /// </summary>
+        public event EventHandler CmpLoadImage;
+        /// <summary>
+        /// ファイル開
+        /// </summary>
+        /// <param name="path"></param>
+        public void OpenFile(string path)
+        {
+            ImgPath = path;
+
+            _ = Service.ConvertBitmapToGrayScale(new Bitmap(path), out ushort[] data, out int width, out int height);
+
+            int max = data.Max();
+
+            int min = data.Min();
+
+            int imgw = max - min;
+
+            int imgb = imgw / 2;
+
+            byte[] bdata = Service.MakeByteData(width, height, 16, data);
+
+            uint[] lut = Service.UpdateLut(16,imgb, imgw, 1F);
+
+            Bitmap bmp = Service.Convert(bdata, width, height, 16, lut);
+
+            DispImage = Service.Bitmap2BitmapImage(bmp);
+
+            CmpLoadImage?.Invoke(this, new EventArgs());
+        }
+        /// <summary>
+        /// 画像読み込みクラス
+        /// </summary>
+        public LoadImager()
+        {
+ 
+        }
+        /// <summary>
+        /// 要求
+        /// </summary>
+        public void RequestImage()
+        {
+            if (DispImage != null)
+            {
+                CmpLoadImage?.Invoke(this, new EventArgs());
+            }
+        }
+    }
+
+    public interface ILoadImager
+    {
+        /// <summary>
+        /// 読込完了
+        /// </summary>
+        event EventHandler CmpLoadImage;
+        /// <summary>
+        /// ファイル開
+        /// </summary>
+        /// <param name="path"></param>
+        void OpenFile(string path);
+        /// <summary>
+        /// 要求
+        /// </summary>
+        void RequestImage();
+    }
+}
