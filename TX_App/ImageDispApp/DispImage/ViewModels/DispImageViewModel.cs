@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DispImage.ViewModels
 {
-    public class ViewAViewModel : BindableBase
+    public class DispImageViewModel : BindableBase
     {
         private string _message;
         public string Message
@@ -17,7 +17,7 @@ namespace DispImage.ViewModels
             set { SetProperty(ref _message, value); }
         }
 
-        public ViewAViewModel()
+        public DispImageViewModel()
         {
             Message = "View A from your Prism Module";
         }

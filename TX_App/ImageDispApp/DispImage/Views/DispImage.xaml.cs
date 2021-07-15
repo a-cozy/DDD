@@ -18,9 +18,9 @@ namespace DispImage.Views
     /// <summary>
     /// Interaction logic for ViewA.xaml
     /// </summary>
-    public partial class ViewA : UserControl
+    public partial class DispImage : UserControl
     {
-        public ViewA()
+        public DispImage()
         {
             InitializeComponent();
         }
