@@ -77,7 +77,12 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TX_Model\MainModel\MainModel.csproj">
+      <Project>{3453B1B5-B6F4-49FA-BAD2-6CFC9E368A8D}</Project>
+      <Name>MainModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\DispImage.xaml">
       <SubType>Designer</SubType>

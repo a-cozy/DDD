@@ -28,7 +28,6 @@ namespace DispApp
             containerRegistry.RegisterSingleton<IMainSomething, MainSomething>();
             containerRegistry.RegisterSingleton<IViewChangeHelper, ViewChangeHelper>();
             containerRegistry.RegisterInstance(this.Container);
-
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

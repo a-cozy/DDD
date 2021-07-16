@@ -28,7 +28,7 @@ namespace MenuBar.ViewModels
         /// </summary>
         private readonly IMainSomething _MainSomething;
         /// <summary>
-        /// 
+        /// 画像ロードクラス I/F
         /// </summary>
         private readonly ILoadImager _LoadImage;
         /// <summary>

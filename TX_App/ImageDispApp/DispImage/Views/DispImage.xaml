@@ -9,14 +9,21 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True" >
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
-            <RowDefinition/>
-            <RowDefinition Height="25"/>
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="{Binding Message}"
-                       Margin="4,0,0,0"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center" />
+        <ScrollViewer Grid.Row="1" x:Name="scrollviewer"
+                      HorizontalScrollBarVisibility="Auto" 
+                      VerticalScrollBarVisibility="Auto" 
+                      Background="Black">
+            <Canvas x:Name="canvas" Width="{Binding ActualWidth, ElementName=image}" Height="{Binding ActualHeight, ElementName=image}">
+                <Canvas.LayoutTransform>
+                    <ScaleTransform 
+                            ScaleX="{Binding ElementName=ZoomRate, Path=Value}" 
+                            ScaleY="{Binding ElementName=ZoomRate, Path=Value}" 
+                            RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                </Canvas.LayoutTransform>
+                <Image x:Name="image" 
+                       Source="{Binding ImageSource}"
+                       Stretch ="UniformToFill"/>
+            </Canvas>
+         </ScrollViewer>
     </Grid>
 </UserControl>
