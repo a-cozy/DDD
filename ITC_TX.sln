@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DispImage", "TX_App\ImageDi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageBoxLib", "ITC_Common\CommonDialogService\MessageBoxLib\MessageBoxLib.csproj", "{B04C5B3A-3DAC-48C4-9694-24BFB7E2F966}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageControler", "TX_App\ImageDispApp\ImageControler\ImageControler.csproj", "{BC24949F-9E9F-4673-AB61-EA555BB2DD6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{B04C5B3A-3DAC-48C4-9694-24BFB7E2F966}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B04C5B3A-3DAC-48C4-9694-24BFB7E2F966}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B04C5B3A-3DAC-48C4-9694-24BFB7E2F966}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC24949F-9E9F-4673-AB61-EA555BB2DD6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC24949F-9E9F-4673-AB61-EA555BB2DD6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC24949F-9E9F-4673-AB61-EA555BB2DD6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC24949F-9E9F-4673-AB61-EA555BB2DD6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{F9DD3C89-E1BF-4840-8AB9-7E8166EBAE6E} = {B0C37225-9126-4A1B-9452-756EB28ED803}
 		{67DF8B4F-10BC-4447-A603-32B8CBBA5FC3} = {34682B36-FD01-4BE6-82D1-7CA4AE13D482}
 		{B04C5B3A-3DAC-48C4-9694-24BFB7E2F966} = {B0C37225-9126-4A1B-9452-756EB28ED803}
+		{BC24949F-9E9F-4673-AB61-EA555BB2DD6E} = {34682B36-FD01-4BE6-82D1-7CA4AE13D482}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {121A0F37-8C98-4039-B8F8-D7FCA8F530C1}
