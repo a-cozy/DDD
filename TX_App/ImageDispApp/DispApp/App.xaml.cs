@@ -24,17 +24,11 @@ namespace DispApp
         {
             containerRegistry.RegisterSingleton<ICommonDialogService, CommonDialogService>();
             containerRegistry.RegisterSingleton<ILoadData, LoadData>();
-
             containerRegistry.RegisterSingleton<ILoadImager, LoadImager>();
-
             containerRegistry.RegisterSingleton<IMainSomething, MainSomething>();
             containerRegistry.RegisterSingleton<IViewChangeHelper, ViewChangeHelper>();
             containerRegistry.RegisterInstance(this.Container);
 
-            //this.Exit += (s, e) =>
-            //{
-            //    containerRegistry.GetContainer().Dispose();
-            //};
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

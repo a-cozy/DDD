@@ -19,7 +19,7 @@ namespace DispImage.ViewModels
 
         public DispImageViewModel()
         {
-            Message = "View A from your Prism Module";
+            Message = "FileName";
         }
     }
 }

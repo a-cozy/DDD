@@ -3,7 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}" Height="480" Width="640">
+        Title="{Binding Title}" 
+        Height="480"
+        Width="640"
+        MinHeight="{Binding WindowHeight}" 
+        MinWidth="{Binding WindowWidth}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
