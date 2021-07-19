@@ -1,25 +1,51 @@
-﻿using Prism.Commands;
+﻿using MainModel;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity;
 
 namespace ImageControler.ViewModels
 {
     public class ChangeScalerViewModel : BindableBase
     {
-        private string _message;
-        public string Message
+        ///// <summary>
+        ///// スケール値
+        ///// </summary>
+        private string _ScaleNum;
+        public string ScaleNum
         {
-            get { return _message; }
-            set { SetProperty(ref _message, value); }
+            get => _ScaleNum;
+            set
+            {
+                if (_ScaleNum == value)
+                    return;
+                _ScaleNum = value;
+                RaisePropertyChanged();
+                _Adjuter.SetZoomValue(float.Parse(_ScaleNum));
+            }
         }
-
-        public ChangeScalerViewModel()
+        /// <summary>
+        /// 画像倍率調整I/F
+        /// </summary>
+        private readonly IScaleAdjuster _Adjuter;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="service"></param>
+        public ChangeScalerViewModel(IUnityContainer service)
         {
-            Message = "View A from your Prism Module";
+            _Adjuter = service.Resolve<IScaleAdjuster>();
+            _Adjuter.CmpInitZoomRateImage += (s, e) =>
+            {
+                if (s is ScaleAdjuster sa)
+                {
+                    ScaleNum = sa.ZoomRate.ToString("00.00");
+                }
+            };
         }
     }
 }

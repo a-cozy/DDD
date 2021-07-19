@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +13,13 @@ namespace MainModel
 {
     public class LoadImager : ILoadImager
     {
+        /// <summary>
+        /// 画像
+        /// </summary>
         public BitmapImage DispImage { get; private set; }
-
+        /// <summary>
+        /// パス
+        /// </summary>
         public string ImgPath { get; private set; }
         /// <summary>
         /// 読込完了
@@ -27,23 +33,34 @@ namespace MainModel
         {
             ImgPath = path;
 
-            _ = Service.ConvertBitmapToGrayScale(new Bitmap(path), out ushort[] data, out int width, out int height);
+            //_ = Service.ConvertBitmapToGrayScale(new Bitmap(path), out ushort[] data, out int width, out int height);
 
-            int max = data.Max();
+            //int max = data.Max();
 
-            int min = data.Min();
+            //int min = data.Min();
 
-            int imgw = max - min;
+            //int imgw = max - min;
 
-            int imgb = imgw / 2;
+            //int imgb = imgw / 2;
 
-            byte[] bdata = Service.MakeByteData(width, height, 16, data);
+            //byte[] bdata = Service.MakeByteData(width, height, 16, data);
 
-            uint[] lut = Service.UpdateLut(16,imgb, imgw, 1F);
+            //uint[] lut = Service.UpdateLut(16,imgb, imgw, 1F);
 
-            Bitmap bmp = Service.Convert(bdata, width, height, 16, lut);
+            //Bitmap bmp = Service.Convert(bdata, width, height, 16, lut);
 
-            DispImage = Service.Bitmap2BitmapImage(bmp);
+            //占有しないパターン-2
+            BitmapImage bmpImage = new BitmapImage();
+            FileStream stream = File.OpenRead(path);
+            bmpImage.BeginInit();
+            bmpImage.CacheOption = BitmapCacheOption.OnLoad;
+            bmpImage.StreamSource = stream;
+            bmpImage.EndInit();
+            stream.Close();
+            DispImage = bmpImage;
+
+
+            //DispImage = Service.Bitmap2BitmapImage(bmp);
 
             CmpLoadImage?.Invoke(this, new EventArgs());
         }

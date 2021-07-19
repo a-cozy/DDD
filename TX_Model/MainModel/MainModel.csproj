@@ -92,6 +92,7 @@
     <Compile Include="LoadImager.cs" />
     <Compile Include="MainSomething.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScaleAdjuster.cs" />
     <Compile Include="SomethingClass.cs" />
     <Compile Include="ViewChangeHelper.cs" />
   </ItemGroup>

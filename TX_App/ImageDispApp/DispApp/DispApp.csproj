@@ -122,6 +122,10 @@
       <Project>{67DF8B4F-10BC-4447-A603-32B8CBBA5FC3}</Project>
       <Name>DispImage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImageControler\ImageControler.csproj">
+      <Project>{BC24949F-9E9F-4673-AB61-EA555BB2DD6E}</Project>
+      <Name>ImageControler</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MenuBar\MenuBar.csproj">
       <Project>{93525692-D246-4506-A7C7-0D428DE49537}</Project>
       <Name>MenuBar</Name>

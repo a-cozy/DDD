@@ -90,6 +90,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
+      <Version>1.1.31</Version>
+    </PackageReference>
     <PackageReference Include="Prism.Core">
       <Version>8.1.97</Version>
     </PackageReference>

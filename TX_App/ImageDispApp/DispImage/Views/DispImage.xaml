@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:DispImage.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              xmlns:prism="http://prismlibrary.com/"
@@ -12,18 +13,29 @@
         <ScrollViewer Grid.Row="1" x:Name="scrollviewer"
                       HorizontalScrollBarVisibility="Auto" 
                       VerticalScrollBarVisibility="Auto" 
-                      Background="Black">
-            <Canvas x:Name="canvas" Width="{Binding ActualWidth, ElementName=image}" Height="{Binding ActualHeight, ElementName=image}">
+                      >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="ScrollChanged">
+                    <prism:InvokeCommandAction Command="{Binding ScrollChanged}" 
+                                               CommandParameter="{Binding ElementName=scrollviewer}"
+                                               />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <Canvas x:Name="canvas" 
+                    Width="{Binding ActualWidth, ElementName=image}" 
+                    Height="{Binding ActualHeight, ElementName=image}">
                 <Canvas.LayoutTransform>
-                    <ScaleTransform 
-                            ScaleX="{Binding ElementName=ZoomRate, Path=Value}" 
-                            ScaleY="{Binding ElementName=ZoomRate, Path=Value}" 
-                            RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                    <ScaleTransform x:Name="scaleTransform"
+                            ScaleX="{Binding ZoomRate}" 
+                            ScaleY="{Binding ZoomRate}" />
                 </Canvas.LayoutTransform>
                 <Image x:Name="image" 
                        Source="{Binding ImageSource}"
                        Stretch ="UniformToFill"/>
             </Canvas>
          </ScrollViewer>
+        <StackPanel Orientation="Horizontal" Margin="8" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <ContentControl prism:RegionManager.RegionName="ImageControlerModule" ></ContentControl>
+        </StackPanel>
     </Grid>
 </UserControl>

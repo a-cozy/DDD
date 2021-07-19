@@ -217,7 +217,7 @@ namespace CommonService.ImageToData
         {
             using (var memory = new MemoryStream())
             {
-                bitmap.Save(memory, ImageFormat.Png);
+                bitmap.Save(memory, ImageFormat.Bmp);
                 memory.Position = 0;
 
                 var bitmapImage = new BitmapImage();

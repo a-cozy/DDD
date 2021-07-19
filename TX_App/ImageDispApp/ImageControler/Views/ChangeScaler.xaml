@@ -6,20 +6,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
-             mc:Ignorable="d" d:DesignWidth="300"
-             prism:ViewModelLocator.AutoWireViewModel="True" Height="85.861" >
+             mc:Ignorable="d" 
+             d:DesignWidth="300"
+             prism:ViewModelLocator.AutoWireViewModel="True" 
+             Height="25" >
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <!--<xceed:SingleUpDown Width="200"
-                                Value="{Binding Height.Value, UpdateSourceTrigger=PropertyChanged}"
-                                MaxLength="10" 
-                                VerticalContentAlignment="Center"
-                                HorizontalContentAlignment="Right" 
-                                ShowButtonSpinner="True"
-                                Maximum="400"
-                                Minimum="0"
-                                ParsingNumberStyle="Float" />-->
-            <xctk:SingleUpDown Width="163"/>
+            <xctk:SingleUpDown Width="100"
+                               ParsingNumberStyle="Float"
+                               Value="{Binding ScaleNum, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,0" 
+                               Increment=".1"
+                               />
         </StackPanel>
     </Grid>
 </UserControl>

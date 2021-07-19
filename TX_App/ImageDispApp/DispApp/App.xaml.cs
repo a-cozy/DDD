@@ -1,6 +1,7 @@
 ﻿using CommonDialogs;
 using DispApp.Views;
 using DispImage;
+using ImageControler;
 using MainModel;
 using MenuBar;
 using MessageBoxLib;
@@ -25,6 +26,7 @@ namespace DispApp
             containerRegistry.RegisterSingleton<ICommonDialogService, CommonDialogService>();
             containerRegistry.RegisterSingleton<ILoadData, LoadData>();
             containerRegistry.RegisterSingleton<ILoadImager, LoadImager>();
+            containerRegistry.RegisterSingleton<IScaleAdjuster, ScaleAdjuster>();
             containerRegistry.RegisterSingleton<IMainSomething, MainSomething>();
             containerRegistry.RegisterSingleton<IViewChangeHelper, ViewChangeHelper>();
             containerRegistry.RegisterInstance(this.Container);
@@ -38,6 +40,9 @@ namespace DispApp
             moduleCatalog.AddModule<MenuBarModule>(InitializationMode.WhenAvailable);
             //センタ用
             moduleCatalog.AddModule<DispImageModule>(InitializationMode.WhenAvailable);
+            //センタ用
+            moduleCatalog.AddModule<ImageControlerModule>(InitializationMode.WhenAvailable);
+
 
             base.ConfigureModuleCatalog(moduleCatalog);
         }
