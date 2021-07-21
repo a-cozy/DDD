@@ -5,12 +5,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:cs ="clr-namespace:DispImageCS"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             xmlns:prism="http://prismlibrary.com/"
+             xmlns:prism="http://prismlibrary.com/" 
+             xmlns:viewmodels="clr-namespace:DispImage.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:DispImageViewModel}"
              prism:ViewModelLocator.AutoWireViewModel="True" >
     <Grid>
-        <ScrollViewer Grid.Row="1" x:Name="scrollviewer"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Column="0" x:Name="scrollviewer"
                       HorizontalScrollBarVisibility="Auto" 
                       VerticalScrollBarVisibility="Auto" 
                       >
@@ -33,9 +39,10 @@
                        Source="{Binding ImageSource}"
                        Stretch ="UniformToFill"/>
             </Canvas>
-         </ScrollViewer>
-        <StackPanel Orientation="Horizontal" Margin="8" VerticalAlignment="Top" HorizontalAlignment="Left">
+        </ScrollViewer>
+        <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="8" VerticalAlignment="Top" HorizontalAlignment="Left">
             <ContentControl prism:RegionManager.RegionName="ImageControlerModule" ></ContentControl>
         </StackPanel>
+        <ContentControl Grid.Column="1" prism:RegionManager.RegionName="SampleDataGridModule" ></ContentControl>
     </Grid>
 </UserControl>

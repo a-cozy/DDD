@@ -1,0 +1,24 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:local="clr-namespace:SampleDataGrid.UserCtrl" x:Class="SampleDataGrid.UserCtrl.TestUserControl"             
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             Height="230"
+             Width="320"
+             Background="LightGray"
+             x:Name="root">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="{Binding MesText, ElementName=root, NotifyOnTargetUpdated=True}" TargetUpdated="OnTargetUpdated"/>
+        <TextBlock Grid.Row="0" Text="{Binding ZoomRate, ElementName=root, NotifyOnTargetUpdated=True}" TargetUpdated="OnTargetUpdated"/>
+        <Image Grid.Row="1" x:Name="image" Source="{Binding SendedImage, ElementName=root}" Visibility="Hidden"></Image>
+        <local:ImageCanvas Grid.Row="1" x:Name="canvasBig" 
+                           Width="{Binding ActualWidth, ElementName=image}" 
+                           Height="{Binding ActualHeight, ElementName=image}"
+                           />
+    </Grid>
+</UserControl>

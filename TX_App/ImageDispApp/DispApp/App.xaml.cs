@@ -7,6 +7,7 @@ using MenuBar;
 using MessageBoxLib;
 using Prism.Ioc;
 using Prism.Modularity;
+using SampleDataGrid;
 using System.Windows;
 
 namespace DispApp
@@ -40,9 +41,10 @@ namespace DispApp
             moduleCatalog.AddModule<MenuBarModule>(InitializationMode.WhenAvailable);
             //センタ用
             moduleCatalog.AddModule<DispImageModule>(InitializationMode.WhenAvailable);
-            //センタ用
+            //画像制御用
             moduleCatalog.AddModule<ImageControlerModule>(InitializationMode.WhenAvailable);
-
+            //データグリッド用
+            moduleCatalog.AddModule<SampleDataGridModule>(InitializationMode.WhenAvailable);
 
             base.ConfigureModuleCatalog(moduleCatalog);
         }

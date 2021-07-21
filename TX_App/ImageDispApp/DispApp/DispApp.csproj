@@ -130,6 +130,10 @@
       <Project>{93525692-D246-4506-A7C7-0D428DE49537}</Project>
       <Name>MenuBar</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SampleDataGrid\SampleDataGrid.csproj">
+      <Project>{E0FF934F-8B3D-45F5-A367-646C75C4B54C}</Project>
+      <Name>SampleDataGrid</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -21,11 +21,15 @@ namespace ImageControler.ViewModels
             get => _ScaleNum;
             set
             {
-                if (_ScaleNum == value)
-                    return;
-                _ScaleNum = value;
-                RaisePropertyChanged();
-                _Adjuter.SetZoomValue(float.Parse(_ScaleNum));
+                //if(string.IsNullOrEmpty(value)) 
+                if (!string.IsNullOrEmpty(value)&&float.TryParse(value.ToString(),out float zoom))
+                {
+                    if (_ScaleNum == value)
+                        return;
+                    _ScaleNum = value;
+                    RaisePropertyChanged();
+                    _Adjuter.SetZoomValue(float.Parse(_ScaleNum));
+                }
             }
         }
         /// <summary>
@@ -46,6 +50,7 @@ namespace ImageControler.ViewModels
                     ScaleNum = sa.ZoomRate.ToString("00.00");
                 }
             };
+            ScaleNum = "0.00";
         }
     }
 }

@@ -65,6 +65,7 @@ namespace DispImage.ViewModels
             _EventAggregator = service.Resolve<IEventAggregator>();
 
             _ImageSource = new BitmapImage();
+
             _LoadImage = service.Resolve<ILoadImager>();
             _LoadImage.CmpLoadImage += (s, e) =>
             {
@@ -82,7 +83,6 @@ namespace DispImage.ViewModels
                 if (s is ScaleAdjuster sa)
                 {
                     ZoomRate = sa.ZoomRate;
-                    //_EventAggregator.GetEvent<PubSubEvent<float>>().Publish(ZoomRate);
                 }
             };
 
