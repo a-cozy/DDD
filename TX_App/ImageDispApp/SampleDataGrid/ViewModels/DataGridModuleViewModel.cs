@@ -25,8 +25,8 @@ namespace SampleDataGrid.ViewModels
         /// <summary>
         /// 倍率
         /// </summary>
-        private int _ZoomRate;
-        public int ZoomRate
+        private float _ZoomRate;
+        public float ZoomRate
         {
             get { return _ZoomRate; }
             set { SetProperty(ref _ZoomRate, value); }
@@ -67,7 +67,7 @@ namespace SampleDataGrid.ViewModels
             {
                 if (s is ScaleAdjuster sa)
                 {
-                    ZoomRate = (int)sa.ZoomRate;
+                    ZoomRate = sa.ZoomRate;
                 }
             };
             FileName = string.Empty;

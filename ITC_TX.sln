@@ -35,6 +35,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageControler", "TX_App\Im
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleDataGrid", "TX_App\ImageDispApp\SampleDataGrid\SampleDataGrid.csproj", "{E0FF934F-8B3D-45F5-A367-646C75C4B54C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CustomControl", "CustomControl", "{0F76886B-FFB2-4803-8DED-6EE450144628}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TXCustomControlLib", "TX_App\TX_customcontrol\TXCustomControlLib\TXCustomControlLib.csproj", "{4F68D46D-DD0E-4C40-A480-28CB4C87F3B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,10 @@ Global
 		{E0FF934F-8B3D-45F5-A367-646C75C4B54C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0FF934F-8B3D-45F5-A367-646C75C4B54C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0FF934F-8B3D-45F5-A367-646C75C4B54C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F68D46D-DD0E-4C40-A480-28CB4C87F3B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F68D46D-DD0E-4C40-A480-28CB4C87F3B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F68D46D-DD0E-4C40-A480-28CB4C87F3B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F68D46D-DD0E-4C40-A480-28CB4C87F3B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +102,8 @@ Global
 		{B04C5B3A-3DAC-48C4-9694-24BFB7E2F966} = {B0C37225-9126-4A1B-9452-756EB28ED803}
 		{BC24949F-9E9F-4673-AB61-EA555BB2DD6E} = {34682B36-FD01-4BE6-82D1-7CA4AE13D482}
 		{E0FF934F-8B3D-45F5-A367-646C75C4B54C} = {34682B36-FD01-4BE6-82D1-7CA4AE13D482}
+		{0F76886B-FFB2-4803-8DED-6EE450144628} = {6DD2F450-2197-4C70-A24F-2162AA41483C}
+		{4F68D46D-DD0E-4C40-A480-28CB4C87F3B4} = {0F76886B-FFB2-4803-8DED-6EE450144628}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {121A0F37-8C98-4039-B8F8-D7FCA8F530C1}

@@ -88,6 +88,7 @@
     <Compile Include="BitmapService.cs" />
     <Compile Include="ControlImager.cs" />
     <Compile Include="DownLoadImage.cs" />
+    <Compile Include="ImageCoodinate.cs" />
     <Compile Include="LoadData.cs" />
     <Compile Include="LoadImager.cs" />
     <Compile Include="MainSomething.cs" />

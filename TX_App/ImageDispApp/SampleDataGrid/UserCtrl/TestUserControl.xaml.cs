@@ -35,15 +35,15 @@ namespace SampleDataGrid.UserCtrl
 
 
 
-        public int ZoomRate
+        public float ZoomRate
         {
-            get { return (int)GetValue(ZoomRateProperty); }
+            get { return (float)GetValue(ZoomRateProperty); }
             set { SetValue(ZoomRateProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ZoomRate.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ZoomRateProperty =
-            DependencyProperty.Register("ZoomRate", typeof(int), typeof(TestUserControl), new PropertyMetadata(0));
+            DependencyProperty.Register("ZoomRate", typeof(float), typeof(TestUserControl), new PropertyMetadata(0F));
 
 
 
@@ -56,9 +56,16 @@ namespace SampleDataGrid.UserCtrl
         {
             if (SendedImage != null&& System.IO.Path.IsPathRooted(MesText))
             {
-                canvasBig.Zoom = ZoomRate;
-                canvasBig.Source = SendedImage;
+                //canvasBig.ZoomRate = ZoomRate;
+                //canvasBig.Source = SendedImage;
             }
         }
+
+        //private void canvasBig_SizeChanged(object sender, SizeChangedEventArgs e)
+        //{
+        //    var uielement = this.GridA as UIElement;
+        //    canvasBig.SetLeft(uielement, (canvasBig.ActualWidth - canvasBig.ActualWidth) / 2);
+        //    //canvasBig.SetTop(uielement, (canvasBig.ActualHeight - canvasBig.ActualHeight) / 2);
+        //}
     }
 }

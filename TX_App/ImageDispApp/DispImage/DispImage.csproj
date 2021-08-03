@@ -50,7 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DispImageModule.cs" />
-    <Compile Include="ImageCanvas.cs" />
+    <Compile Include="EventToCommandBehavior.cs" />
+    <Compile Include="MouseBehaviour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -82,6 +83,10 @@
     <ProjectReference Include="..\..\..\TX_Model\MainModel\MainModel.csproj">
       <Project>{3453B1B5-B6F4-49FA-BAD2-6CFC9E368A8D}</Project>
       <Name>MainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TX_customcontrol\TXCustomControlLib\TXCustomControlLib.csproj">
+      <Project>{4F68D46D-DD0E-4C40-A480-28CB4C87F3B4}</Project>
+      <Name>TXCustomControlLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

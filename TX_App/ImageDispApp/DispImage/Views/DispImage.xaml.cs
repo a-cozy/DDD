@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -25,25 +26,17 @@ namespace DispImage.Views
         {
             InitializeComponent();
 
-            eventAggregator.GetEvent<PubSubEvent<float>>().Subscribe((scale) =>
+            eventAggregator.GetEvent<PubSubEvent<object>>().Subscribe((obj) =>
             {
-                //scrollviewer.ScrollToHorizontalOffset(scrollviewer.ScrollableWidth / 2);
-                //scrollviewer.ScrollToVerticalOffset(scrollviewer.ScrollableHeight / 2);
-
-                ////// canvasサイズの変更
-                ////canvas.Height *= scale;
-                ////canvas.Width *= scale;
-
-                //// canvasの拡大縮小
-                //Matrix m0 = new Matrix();
-                //m0.Scale(scale, scale);//元のサイズとの比
-                                       //scaleTransform.Transform();
-
-                //// scrollViewerのスクロールバーの位置をマウス位置を中心とする。
-                //Point mousePoint = e.GetPosition(scrollViewer);
-                //Double x_barOffset = (scrollViewer.HorizontalOffset + mousePoint.X) * scale - mousePoint.X;
-                //scrollViewer.ScrollToHorizontalOffset(x_barOffset);
-
+                if (obj is DragDeltaEventArgs ddea)
+                {
+                    var dd = ddea.Source as Thumb;
+                    double expectposi = Canvas.GetLeft(thumb1) + ddea.HorizontalChange;
+                    if (expectposi > 0 && expectposi < canvas.ActualWidth)
+                    {
+                        Canvas.SetLeft(thumb1, expectposi);
+                    }
+                }
             });
             
         }

@@ -17,7 +17,6 @@ namespace MainModel
         public LoadData()
         {
             FileName = System.Environment.CurrentDirectory + "ZipData";
-
             EndLoadData?.Invoke(this, new EventArgs());
         }
 

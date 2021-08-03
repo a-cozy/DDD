@@ -118,6 +118,10 @@
       <Project>{3453b1b5-b6f4-49fa-bad2-6cfc9e368a8d}</Project>
       <Name>MainModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\TX_customcontrol\TXCustomControlLib\TXCustomControlLib.csproj">
+      <Project>{4F68D46D-DD0E-4C40-A480-28CB4C87F3B4}</Project>
+      <Name>TXCustomControlLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DispImage\DispImage.csproj">
       <Project>{67DF8B4F-10BC-4447-A603-32B8CBBA5FC3}</Project>
       <Name>DispImage</Name>

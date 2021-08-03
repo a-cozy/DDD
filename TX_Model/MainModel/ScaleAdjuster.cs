@@ -41,6 +41,14 @@ namespace MainModel
         /// </summary>
         public float ImageWidth { get; private set; }
         /// <summary>
+        /// 画像高さ
+        /// </summary>
+        public float ActualImageHeight { get; private set; }
+        /// <summary>
+        /// 画像幅
+        /// </summary>
+        public float ActualImageWidth { get; private set; }
+        /// <summary>
         /// 
         /// </summary>
         private readonly ILoadImager _LoadImage;
@@ -68,6 +76,8 @@ namespace MainModel
         public void DoCaleInitScale(float initScrollActualWidth,
                                     float initScrollActualHeight)
         {
+            ActualImageHeight = initScrollActualHeight;
+            ActualImageWidth = initScrollActualWidth;
             List<float> vals = new List<float>()
                     {
                         initScrollActualWidth,

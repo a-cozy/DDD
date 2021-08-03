@@ -13,12 +13,12 @@ namespace SampleDataGrid.UserCtrl
     {
 
 
-        public int Zoom { get; set; }
+        //public int Zoom { get; set; }
 
         public ImageCanvas()
         {
-            Zoom = 1;
-
+            //Zoom = 1;
+            ZoomRate = 1F;
             this.VisualEdgeMode = EdgeMode.Aliased;
             RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
             RenderOptions.SetBitmapScalingMode(this, BitmapScalingMode.NearestNeighbor);
@@ -35,15 +35,15 @@ namespace SampleDataGrid.UserCtrl
             }
         }
 
-        public int ZoomRate
+        public float ZoomRate
         {
-            get { return (int)GetValue(ZoomRateProperty); }
+            get { return (float)GetValue(ZoomRateProperty); }
             set { SetValue(ZoomRateProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ZoomRate.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ZoomRateProperty =
-            DependencyProperty.Register("ZoomRate", typeof(int), typeof(ImageCanvas), new PropertyMetadata(1));
+            DependencyProperty.Register("ZoomRate", typeof(float), typeof(ImageCanvas), new PropertyMetadata(1F));
 
 
         protected override void OnRender(DrawingContext dc)
@@ -52,29 +52,29 @@ namespace SampleDataGrid.UserCtrl
                 return;
 
             ScaleTransform scaleTransform = new ScaleTransform();
-            scaleTransform.ScaleX = Zoom;
-            scaleTransform.ScaleY = Zoom;
+            scaleTransform.ScaleX = ZoomRate;
+            scaleTransform.ScaleY = ZoomRate;
 
             dc.PushTransform(scaleTransform);
 
             RenderOptions.SetEdgeMode(_source, EdgeMode.Unspecified);
             RenderOptions.SetBitmapScalingMode(_source, BitmapScalingMode.NearestNeighbor);
 
-            int w = (int)(_source.Width * Zoom);
-            int h = (int)(_source.Height * Zoom);
+            int w = (int)(_source.Width * ZoomRate);
+            int h = (int)(_source.Height * ZoomRate);
 
             dc.DrawImage(_source, new Rect(0, 0, _source.Width, _source.Height));
 
             dc.Pop();
 
-            if (Zoom > 1)
+            if (ZoomRate > 1)
             {
-                for (int i = 0; i < w; i += Zoom)
+                for (int i = 0; i < w; i += (int)ZoomRate)
                 {
                     dc.DrawLine(new Pen(Brushes.White, 1), new Point(i, 0), new Point(i, h));
                 }
 
-                for (int j = 0; j < h; j += Zoom)
+                for (int j = 0; j < h; j += (int)ZoomRate)
                 {
                     dc.DrawLine(new Pen(Brushes.White, 1), new Point(0, j), new Point(w, j));
                 }
