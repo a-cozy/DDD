@@ -95,6 +95,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
+      <Version>1.1.31</Version>
+    </PackageReference>
     <PackageReference Include="Prism.Core">
       <Version>8.1.97</Version>
     </PackageReference>
@@ -118,25 +121,25 @@
       <Project>{3453b1b5-b6f4-49fa-bad2-6cfc9e368a8d}</Project>
       <Name>MainModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\TX_customcontrol\TXCustomControlLib\TXCustomControlLib.csproj">
-      <Project>{4F68D46D-DD0E-4C40-A480-28CB4C87F3B4}</Project>
-      <Name>TXCustomControlLib</Name>
+    <ProjectReference Include="..\..\CustomCtrl\WPF_CC_Sample\WPF_CC_Sample.csproj">
+      <Project>{ad2b5bfe-3800-4452-8c2f-39ede912b23f}</Project>
+      <Name>WPF_CC_Sample</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DispImage\DispImage.csproj">
-      <Project>{67DF8B4F-10BC-4447-A603-32B8CBBA5FC3}</Project>
-      <Name>DispImage</Name>
+    <ProjectReference Include="..\DispImageWindow\DispImageWindow.csproj">
+      <Project>{AE4E1D64-4F3C-4328-B2D4-FB3B1C40EB51}</Project>
+      <Name>DispImageWindow</Name>
     </ProjectReference>
     <ProjectReference Include="..\ImageControler\ImageControler.csproj">
       <Project>{BC24949F-9E9F-4673-AB61-EA555BB2DD6E}</Project>
       <Name>ImageControler</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImageCtrlDisp\ImageCtrlDisp.csproj">
+      <Project>{A3F2E42B-59E6-4893-B5C5-F7DBB1FDB427}</Project>
+      <Name>ImageCtrlDisp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MenuBar\MenuBar.csproj">
       <Project>{93525692-D246-4506-A7C7-0D428DE49537}</Project>
       <Name>MenuBar</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SampleDataGrid\SampleDataGrid.csproj">
-      <Project>{E0FF934F-8B3D-45F5-A367-646C75C4B54C}</Project>
-      <Name>SampleDataGrid</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

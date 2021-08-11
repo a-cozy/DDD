@@ -1,13 +1,13 @@
 ﻿using CommonDialogs;
 using DispApp.Views;
-using DispImage;
+using DispImageWindow;
 using ImageControler;
+using ImageCtrlDisp;
 using MainModel;
 using MenuBar;
 using MessageBoxLib;
 using Prism.Ioc;
 using Prism.Modularity;
-using SampleDataGrid;
 using System.Windows;
 
 namespace DispApp
@@ -48,11 +48,18 @@ namespace DispApp
             //メニューバー用
             moduleCatalog.AddModule<MenuBarModule>(InitializationMode.WhenAvailable);
             //センタ用
-            moduleCatalog.AddModule<DispImageModule>(InitializationMode.WhenAvailable);
+            //moduleCatalog.AddModule<DispImageModule>(InitializationMode.WhenAvailable);
             //画像制御用
             moduleCatalog.AddModule<ImageControlerModule>(InitializationMode.WhenAvailable);
+            //画像制御用
+            moduleCatalog.AddModule<ImageCtrlDispModule>(InitializationMode.WhenAvailable);
+            //画像制御用
+            moduleCatalog.AddModule<DispImageWindowModule>(InitializationMode.WhenAvailable);
+            
+
+
             //データグリッド用
-            moduleCatalog.AddModule<SampleDataGridModule>(InitializationMode.WhenAvailable);
+            //moduleCatalog.AddModule<SampleDataGridModule>(InitializationMode.WhenAvailable);
 
             base.ConfigureModuleCatalog(moduleCatalog);
         }

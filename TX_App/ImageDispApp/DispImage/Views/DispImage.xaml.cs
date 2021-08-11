@@ -26,19 +26,29 @@ namespace DispImage.Views
         {
             InitializeComponent();
 
-            eventAggregator.GetEvent<PubSubEvent<object>>().Subscribe((obj) =>
-            {
-                if (obj is DragDeltaEventArgs ddea)
-                {
-                    var dd = ddea.Source as Thumb;
-                    double expectposi = Canvas.GetLeft(thumb1) + ddea.HorizontalChange;
-                    if (expectposi > 0 && expectposi < canvas.ActualWidth)
-                    {
-                        Canvas.SetLeft(thumb1, expectposi);
-                    }
-                }
-            });
+            //eventAggregator.GetEvent<PubSubEvent<object>>().Subscribe((obj) =>
+            //{
+            //    //if (obj is DragDeltaEventArgs ddea)
+            //    //{
+            //    //    var dd = ddea.Source as Thumb;
+            //    //    double expectposi = Canvas.GetLeft(thumb1) + ddea.HorizontalChange;
+            //    //    if (expectposi > 0 && expectposi < canvas.ActualWidth)
+            //    //    {
+            //    //        Canvas.SetLeft(thumb1, expectposi);
+            //    //    }
+            //    //}
+            //});
             
         }
+
+        //private void thumb1_DragDelta(object sender, DragDeltaEventArgs e)
+        //{
+        //    //var dd = e.Source as Thumb;
+        //    //double expectposi = Canvas.GetLeft(thumb1) + e.HorizontalChange;
+        //    //if (expectposi > 0 && expectposi < canvas.ActualWidth)
+        //    //{
+        //    //    Canvas.SetLeft(thumb1, expectposi);
+        //    //}
+        //}
     }
 }

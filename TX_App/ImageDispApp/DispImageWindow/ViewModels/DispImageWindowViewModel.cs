@@ -1,23 +1,20 @@
 ﻿using MainModel;
 using Microsoft.Xaml.Behaviors.Core;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Unity;
 
-namespace DispImage.ViewModels
+namespace DispImageWindow.ViewModels
 {
-    public class DispImageViewModel : BindableBase
+    public class DispImageWindowViewModel : BindableBase
     {
         /// <summary>
         /// 画像開く処理完了？
@@ -87,24 +84,6 @@ namespace DispImage.ViewModels
             set { SetProperty(ref _RotAngle, value); }
         }
         /// <summary>
-        /// マウス位置_X
-        /// </summary>
-        private double _MouseX;
-        public double MouseX
-        {
-            get { return _MouseX; }
-            set { SetProperty(ref _MouseX, value); }
-        }
-        /// <summary>
-        /// マウス位置_Y
-        /// </summary>
-        private double _MouseY;
-        public double MouseY
-        {
-            get { return _MouseY; }
-            set { SetProperty(ref _MouseY, value); }
-        }
-        /// <summary>
         /// 線の太さ
         /// </summary>
         private float _LineThickness;
@@ -113,19 +92,6 @@ namespace DispImage.ViewModels
             get { return _LineThickness; }
             set { SetProperty(ref _LineThickness, value); }
         }
-
-        /// <summary>
-        /// スクロール変更
-        /// </summary>
-        public ICommand ScrollChanged { get; private set; }
-        /// <summary>
-        /// ラインのドラッグ
-        /// </summary>
-        public ICommand ThumbDragDeltaCommand { get; private set; }
-        /// <summary>
-        /// 画像ローダー
-        /// </summary>
-        private readonly IImageCoodinate _ImageCoodinate;
         /// <summary>
         /// 画像ローダー
         /// </summary>
@@ -134,17 +100,14 @@ namespace DispImage.ViewModels
         /// 画像倍率調整I/F
         /// </summary>
         private readonly IScaleAdjuster _Adjuter;
+
         /// <summary>
-        /// MV → Vへの操作用
+        /// スクロール変更
         /// </summary>
-        //private readonly IEventAggregator _EventAggregator;
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="service"></param>
-        public DispImageViewModel(IUnityContainer service)
+        public ICommand ScrollChanged { get; private set; }
+
+        public DispImageWindowViewModel(IUnityContainer service)
         {
-            //_EventAggregator = service.Resolve<IEventAggregator>();
 
             _ImageSource = new BitmapImage();
             LineThickness = 1;
@@ -167,7 +130,6 @@ namespace DispImage.ViewModels
                 {
                     ZoomRate = sa.ZoomRate;
 
-
                     if (ZoomRate != 0)
                     {
                         CurrentX = ImageSource.Width / 2;
@@ -178,24 +140,6 @@ namespace DispImage.ViewModels
                     }
                 }
             };
-
-            _ImageCoodinate = service.Resolve<IImageCoodinate>();
-            _ImageCoodinate.PropertyChanged += (s, e) =>
-            {
-                if (s is ImageCoodinate ic)
-                {
-                    //CurrentX = (int)ic.CurrentX * (int)ZoomRate;
-                    //CurrentX = (int)ic.CurrentX;
-                    //_EventAggregator.GetEvent<PubSubEvent<float>>().Publish(CurrentX);
-                }
-            };
-
-            ThumbDragDeltaCommand = new ActionCommand(x =>
-            {
-               // _EventAggregator.GetEvent<PubSubEvent<object>>().Publish(x);
-
-                //Debug.WriteLine(CurrentX);
-            });
 
             ScrollChanged = new ActionCommand((d) =>
             {
