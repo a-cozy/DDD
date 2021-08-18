@@ -89,16 +89,27 @@
     <Compile Include="ControlImager.cs" />
     <Compile Include="DownLoadImage.cs" />
     <Compile Include="ImageCoodinate.cs" />
+    <Compile Include="InitModel.cs" />
     <Compile Include="LoadData.cs" />
     <Compile Include="LoadImager.cs" />
     <Compile Include="MainSomething.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScaleAdjuster.cs" />
     <Compile Include="SomethingClass.cs" />
+    <Compile Include="TmpConf.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>TmpConf.settings</DependentUpon>
+    </Compile>
     <Compile Include="ViewChangeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="TmpConf.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>TmpConf.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

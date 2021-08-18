@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -41,38 +42,38 @@ namespace DispImageWindow.ViewModels
         /// <summary>
         /// 線の現在位置X
         /// </summary>
-        private double _CurrentX;
-        public double CurrentX
+        private double _CurrentLeft;
+        public double CurrentLeft
         {
-            get { return _CurrentX; }
-            set { SetProperty(ref _CurrentX, value); }
+            get { return _CurrentLeft; }
+            set { SetProperty(ref _CurrentLeft, value); }
         }
         /// <summary>
         /// 線の現在位置Y
         /// </summary>
-        private double _CurrentY;
-        public double CurrentY
+        private double _CurrentTop;
+        public double CurrentTop
         {
-            get { return _CurrentY; }
-            set { SetProperty(ref _CurrentY, value); }
+            get { return _CurrentTop; }
+            set { SetProperty(ref _CurrentTop, value); }
         }
         /// <summary>
         /// 回転線の現在位置X
         /// </summary>
-        private double _CurrentRotX;
-        public double CurrentRotX
+        private double _CurrentRight;
+        public double CurrentRight
         {
-            get { return _CurrentRotX; }
-            set { SetProperty(ref _CurrentRotX, value); }
+            get { return _CurrentRight; }
+            set { SetProperty(ref _CurrentRight, value); }
         }
         /// <summary>
         /// 回転線の現在位置Y
         /// </summary>
-        private double _CurrentRotY;
-        public double CurrentRotY
+        private double _CurrentBottom;
+        public double CurrentBottom
         {
-            get { return _CurrentRotY; }
-            set { SetProperty(ref _CurrentRotY, value); }
+            get { return _CurrentBottom; }
+            set { SetProperty(ref _CurrentBottom, value); }
         }
         /// <summary>
         /// 回転線の角度
@@ -123,6 +124,7 @@ namespace DispImageWindow.ViewModels
                 }
             };
 
+
             _Adjuter = service.Resolve<IScaleAdjuster>();
             _Adjuter.ChangeZoomRate += (s, e) =>
             {
@@ -132,9 +134,26 @@ namespace DispImageWindow.ViewModels
 
                     if (ZoomRate != 0)
                     {
-                        CurrentX = ImageSource.Width / 2;
-                        CurrentY = ImageSource.Height / 2;
-                        RotAngle = 45;
+
+                        CurrentLeft = 0;
+                        CurrentTop = 0;
+                        double centX = ImageSource.Width / 2d;
+                        double centY = ImageSource.Height / 2d;
+                        //var dddd = new Point(this.designerItem.Width * this.designerItem.RenderTransformOrigin.X,
+                        //          this.designerItem.Height * this.designerItem.RenderTransformOrigin.Y)
+                        var ddd = Math.Atan2(centX, centY);
+
+                        var radians = Math.Atan2(CurrentLeft, CurrentTop);
+                        var angle = radians * (180 / Math.PI);
+
+                        CurrentLeft = 0;
+                        CurrentTop = ImageSource.Height / 2 + ImageSource.Height / 4;
+                        CurrentRight = 0;
+                        CurrentBottom = ImageSource.Height / 2 + ImageSource.Height / 4;
+                        RotAngle = 30;
+                        //var radians = Math.Atan2(transPoint.Y, transPoint.X);
+                        //var angle = radians * (180 / Math.PI);
+
                         var tmp = 1F / (ZoomRate * 0.5) * 100;
                         LineThickness = (float)(Math.Ceiling(tmp) / 100F);
                     }
@@ -149,6 +168,8 @@ namespace DispImageWindow.ViewModels
                     _IsOpenProc = false;
                 }
             });
+
+            _LoadImage.RequestImage();
         }
     }
 }

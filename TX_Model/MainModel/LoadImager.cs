@@ -25,14 +25,35 @@ namespace MainModel
         /// 読込完了
         /// </summary>
         public event EventHandler CmpLoadImage;
+
+        private readonly IInitModel _InitModel;
+        /// <summary>
+        /// 画像読み込みクラス
+        /// </summary>
+        public LoadImager(IInitModel init)
+        {
+            _InitModel = init;
+            _InitModel.DoInit += (s, e) => 
+            {
+                if(s is InitModel im)
+                {
+                    ImgPath = im.CurrentDir;
+                    NewMethod(ImgPath);
+                }
+            };
+
+
+
+        }
         /// <summary>
         /// ファイル開
         /// </summary>
         /// <param name="path"></param>
         public void OpenFile(string path)
         {
-            ImgPath = path;
 
+            _InitModel.SetDir(path);
+            ImgPath = path;
             //_ = Service.ConvertBitmapToGrayScale(new Bitmap(path), out ushort[] data, out int width, out int height);
 
             //int max = data.Max();
@@ -50,6 +71,11 @@ namespace MainModel
             //Bitmap bmp = Service.Convert(bdata, width, height, 16, lut);
 
             //占有しないパターン-2
+            NewMethod(path);
+        }
+
+        private void NewMethod(string path)
+        {
             BitmapImage bmpImage = new BitmapImage();
             FileStream stream = File.OpenRead(path);
             bmpImage.BeginInit();
@@ -64,22 +90,16 @@ namespace MainModel
 
             CmpLoadImage?.Invoke(this, new EventArgs());
         }
-        /// <summary>
-        /// 画像読み込みクラス
-        /// </summary>
-        public LoadImager()
-        {
- 
-        }
+
         /// <summary>
         /// 要求
         /// </summary>
         public void RequestImage()
         {
-            if (DispImage != null)
-            {
-                CmpLoadImage?.Invoke(this, new EventArgs());
-            }
+
+                _InitModel?.Request();
+                //CmpLoadImage?.Invoke(this, new EventArgs());
+            
         }
     }
 

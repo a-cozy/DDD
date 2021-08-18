@@ -25,7 +25,10 @@ namespace DispApp
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<ICommonDialogService, CommonDialogService>();
-            
+
+            containerRegistry.RegisterSingleton<IInitModel,InitModel>();
+
+
             containerRegistry.RegisterSingleton<ILoadData, LoadData>();
             
             containerRegistry.RegisterSingleton<ILoadImager, LoadImager>();

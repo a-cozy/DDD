@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,38 +62,111 @@ namespace WPF_CC_Sample
         {
             DragDelta += (s, e) =>
             {
-                double expectposi = Canvas.GetLeft(this) + e.HorizontalChange;
+                double centX = CanvasActualWidth / 2d;
+                double centY = CanvasActualHeight / 2d;
+
+                newPoint.X = oldPoint.X + e.HorizontalChange;
+                newPoint.Y = oldPoint.Y + e.VerticalChange;
+
+                double ddd = Math.Atan2(newPoint.X - centX, newPoint.Y - centY);
+                if (ddd < 0)
+                {
+                    ddd += Math.PI;
+                }
+                var angle = Math.Tan(ddd) * 180 / Math.PI;
+
+                Debug.WriteLine($"new {Math.Tan(ddd) * 180 / Math.PI}");
+
+                var a = -Math.Tan(ddd);
+
+                if (a < 0)
+                {
+                    var b = -a * centX;
+                    var exx = -b / a;
+                    var exxx = (CanvasActualHeight - b) / a;
+                    Canvas.SetLeft(this, exx);
+                    Canvas.SetTop(this, 0);
+                    Canvas.SetBottom(this, CanvasActualHeight);
+                    Canvas.SetRight(this, exxx);
+                }
+                else 
+                {
+                    var b = a * centX;
+                }
+
+                //double expectposiX = Canvas.GetLeft(this) + e.HorizontalChange;
+                //double expectposiY = Canvas.GetTop(this) + e.VerticalChange ;
                 //if (expectposi > 0 && expectposi <= CanvasActualWidth)
                 //{
                 //    Canvas.SetLeft(this, expectposi);
                 //}
             };
 
+            DragStarted += (s, e) => 
+            {
+
+            };
+
             MouseMove += (s, e) =>
             {
-                Thumb b = s as Thumb;
-                if (Mouse.Captured == b)
+                List<Point> fourps = new List<Point>()
                 {
+                    new Point(0,0),
+                    new Point(CanvasActualWidth,0),
+                    new Point(0,CanvasActualHeight),
+                    new Point(CanvasActualWidth,CanvasActualHeight),
+                };
 
-                    var d = this.DataContext;
-                    //this.designerItem = DataContext as ContentControl;
-                    //Canvas sss is e.Source;
-                    //{
-                    
-                    //}
-                    //var dd = e.Source;
+                double centX = CanvasActualWidth / 2d;
+                double centY = CanvasActualHeight / 2d;
+                //double twopi = Math.PI / 2;
 
+                Point point = e.GetPosition(this);
 
+                oldPoint = e.GetPosition(this);
 
+                double ddd = Math.Atan2(point.X - centX, point.Y - centY);
 
-                    Point origin = new Point(b.ActualWidth / 2, b.ActualHeight / 2);
-                    var rawPoint = Mouse.GetPosition(b);
-                    var transPoint = new Point(rawPoint.X - origin.X, rawPoint.Y - origin.Y);
-                    var radians = Math.Atan2(transPoint.Y, transPoint.X);
-                    var angle = radians * (180 / Math.PI);
-                    transe.Angle = angle;
-                    this.RenderTransform = transe;
+                if (ddd < 0)
+                {
+                    ddd += Math.PI;
                 }
+                var angle = Math.Tan(ddd) * 180 / Math.PI;
+
+                Debug.WriteLine($"old {angle.ToString()}");
+
+                this.Cursor = Cursors.SizeNESW;
+
+                //var radians = Math.Atan2(CurrentLeft, CurrentTop);
+
+
+                //double lineTop = Canvas.GetTop(this);
+                //double lineLeft = Canvas.GetLeft(this);
+                //double lineBottom = Canvas.GetBottom(this);
+                //double lineRight = Canvas.GetRight(this);
+
+
+
+
+                //if (Math.Abs(point.Y - expectposiTop) > 5.0 
+                //    && Math.Abs(point.X - expectposiLeft) > 5.0 
+                //     && Math.Abs(Angle) > 45)
+                //{.SizeNS;
+                //}
+
+                //    this.Cursor = Cursors
+
+                //Thumb b = s as Thumb;
+                //if (Mouse.Captured == b)
+                //{
+                //    Point origin = new Point(CanvasActualWidth / 2, CanvasActualHeight / 2);
+                //    var rawPoint = Mouse.GetPosition(b);
+                //    var transPoint = new Point(rawPoint.X - origin.X, rawPoint.Y - origin.Y);
+                //    var radians = Math.Atan2(transPoint.Y, transPoint.X);
+                //    var angle = radians * (180 / Math.PI);
+                //    transe.Angle = angle;
+                //    this.RenderTransform = transe;
+                //}
                 //    double expectposi = Canvas.GetLeft(this);
                 //Point point = e.GetPosition(this);
                 //if (Math.Abs(point.X - expectposi) > 5.0)
@@ -113,6 +187,31 @@ namespace WPF_CC_Sample
         // Using a DependencyProperty as the backing store for Angle.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty AngleProperty =
             DependencyProperty.Register("Angle", typeof(double), typeof(RotateLine_MouseDrag), new PropertyMetadata(0d));
+
+
+
+        public int CanvasActualWidth
+        {
+            get { return (int)GetValue(CanvasActualWidthProperty); }
+            set { SetValue(CanvasActualWidthProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CanvasActualWidth.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CanvasActualWidthProperty =
+            DependencyProperty.Register("CanvasActualWidth", typeof(int), typeof(RotateLine_MouseDrag), new PropertyMetadata(0));
+
+
+
+        public int CanvasActualHeight
+        {
+            get { return (int)GetValue(CanvasActualHeightProperty); }
+            set { SetValue(CanvasActualHeightProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CanvasActualHeight.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CanvasActualHeightProperty =
+            DependencyProperty.Register("CanvasActualHeight", typeof(int), typeof(RotateLine_MouseDrag), new PropertyMetadata(0));
+
 
 
     }
