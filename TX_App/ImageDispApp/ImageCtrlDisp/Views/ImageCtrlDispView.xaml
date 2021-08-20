@@ -13,6 +13,10 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ContentControl Grid.Column="0" prism:RegionManager.RegionName="DispImageWindowModule" ></ContentControl>
+        <Grid Grid.Column="0">
+            <Border Grid.Column="0" BorderBrush="Magenta" BorderThickness="1">
+                <ContentControl Grid.Column="0" prism:RegionManager.RegionName="DispImageWindowModule" ></ContentControl>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

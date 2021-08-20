@@ -24,6 +24,10 @@ namespace MenuBar.ViewModels
         /// </summary>
         public DelegateCommand OpenCmd { get; private set; }
         /// <summary>
+        /// 画像を開くコマンド
+        /// </summary>
+        public DelegateCommand ClearCmd { get; private set; }
+        /// <summary>
         /// メインサポートクラスI/F
         /// </summary>
         private readonly IMainSomething _MainSomething;
@@ -65,6 +69,11 @@ namespace MenuBar.ViewModels
                         return;
                     }
                 };
+            });
+
+            ClearCmd = new DelegateCommand(() => 
+            {
+                _LoadImage.DoClear();
             });
         }
     }

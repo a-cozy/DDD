@@ -22,7 +22,7 @@ namespace DispImage.Views
     /// </summary>
     public partial class DispImage : UserControl
     {
-        public DispImage(IEventAggregator eventAggregator)
+        public DispImage()
         {
             InitializeComponent();
 

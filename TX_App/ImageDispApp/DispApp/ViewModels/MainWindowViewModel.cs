@@ -1,4 +1,7 @@
-﻿using Prism.Mvvm;
+﻿using MainModel;
+using Prism.Mvvm;
+using System.Windows;
+using Unity;
 
 namespace DispApp.ViewModels
 {
@@ -25,9 +28,15 @@ namespace DispApp.ViewModels
             set { SetProperty(ref _WindowHeight, value); }
         }
 
-        public MainWindowViewModel()
-        {
+        private readonly IMainSomething _MainSomething;
 
+        public MainWindowViewModel(IUnityContainer service)
+        {
+            _MainSomething = service.Resolve<IMainSomething>();
+            _MainSomething.ExitApp += (s, e) =>
+            {
+                Application.Current.MainWindow.Close();
+            };
         }
     }
 }

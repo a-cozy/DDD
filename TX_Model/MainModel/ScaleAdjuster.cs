@@ -29,6 +29,10 @@ namespace MainModel
         /// </summary>
         public int ScaleDecimalPlace { get; } = (int)Math.Pow(10,2);
         /// <summary>
+        /// 最小値
+        /// </summary>
+        public float MinValue { get; private set; }
+        /// <summary>
         /// 倍率
         /// </summary>
         public float ZoomRate { get; private set; }
@@ -86,18 +90,33 @@ namespace MainModel
                         ImageHeight
                     };
 
-            var canvmax = Math.Max(ImageHeight, ImageWidth);
-            var scrolmax = Math.Max(initScrollActualHeight, initScrollActualWidth);
+            float canvmax = Math.Max(ImageHeight, ImageWidth);
+            
+            float scrolmax = Math.Max(initScrollActualHeight, initScrollActualWidth);
+            
+            float scrolmin = Math.Min(initScrollActualHeight, initScrollActualWidth);
 
             if (canvmax > scrolmax)
             {//画像大きい
-                ZoomRate = (float)(Math.Floor(vals.Min() / vals.Max() * ScaleDecimalPlace) / ScaleDecimalPlace);
+                var wrate = initScrollActualWidth / ImageWidth;
+                var hrate = initScrollActualHeight / ImageHeight;
+
+                if(wrate<hrate)
+                {
+                    ZoomRate = (float)(Math.Floor(wrate * ScaleDecimalPlace) / ScaleDecimalPlace);
+                }
+                else 
+                {
+                    ZoomRate = (float)(Math.Floor(hrate * ScaleDecimalPlace) / ScaleDecimalPlace);
+                }      
             }
             else
             {//画像小さい
-                float scrolmin = Math.Min(initScrollActualHeight, initScrollActualWidth);
-                ZoomRate = (float)(Math.Floor(scrolmin / canvmax * ScaleDecimalPlace) / ScaleDecimalPlace);
+                ZoomRate = (float)(Math.Floor(scrolmin / (canvmax) * ScaleDecimalPlace) / ScaleDecimalPlace);
             }
+
+            MinValue = ZoomRate;
+
             CmpInitZoomRateImage?.Invoke(this, new EventArgs());
         }
         /// <summary>

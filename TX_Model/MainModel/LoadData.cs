@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,8 +21,9 @@ namespace MainModel
             EndLoadData?.Invoke(this, new EventArgs());
         }
 
-        void IDisposable.Dispose()
+        public void Dispose()
         {
+            Debug.WriteLine("破棄");
             //throw new NotImplementedException();
         }
         public void RequestEvent()

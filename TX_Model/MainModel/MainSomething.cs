@@ -12,7 +12,7 @@ using CommonService.ImageToData;
 
 namespace MainModel
 {
-    public class MainSomething : IMainSomething
+    public class MainSomething : IMainSomething, IDisposable
     {
         public BitmapSource OpenImage { get; set; }
 

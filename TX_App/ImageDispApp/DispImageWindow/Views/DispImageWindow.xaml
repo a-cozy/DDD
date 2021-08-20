@@ -3,6 +3,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:DispImageWindow.Views"
+             xmlns:s ="clr-namespace:DispImageWindow"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"             
@@ -10,53 +11,98 @@
              d:DesignHeight="300" d:DesignWidth="300"
              xmlns:prism="http://prismlibrary.com/" 
              prism:ViewModelLocator.AutoWireViewModel="True" >
-    <Grid>
-        <ScrollViewer x:Name="scrollviewer"
+    <!--<UserControl.Resources>
+        <ControlTemplate x:Key="MoveThumbTemplate" TargetType="{x:Type s:MoveThumb}">
+            <Rectangle Fill="Transparent"/>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ResizeDecoratorTemplate" TargetType="{x:Type Control}">
+            <Grid>
+                <s:ResizeThumb Height="3" Cursor="SizeNS" Margin="0 -4 0 0"
+                       VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                <s:ResizeThumb Width="3" Cursor="SizeWE" Margin="-4 0 0 0"
+                       VerticalAlignment="Stretch" HorizontalAlignment="Left"/>
+                <s:ResizeThumb Width="3" Cursor="SizeWE" Margin="0 0 -4 0"
+                       VerticalAlignment="Stretch" HorizontalAlignment="Right"/>
+                <s:ResizeThumb Height="3" Cursor="SizeNS" Margin="0 0 0 -4"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
+                <s:ResizeThumb Width="7" Height="7" Cursor="SizeNWSE" Margin="-6 -6 0 0"
+                       VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <s:ResizeThumb Width="7" Height="7" Cursor="SizeNESW" Margin="0 -6 -6 0"
+                       VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                <s:ResizeThumb Width="7" Height="7" Cursor="SizeNESW" Margin="-6 0 0 -6"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                <s:ResizeThumb Width="7" Height="7" Cursor="SizeNWSE" Margin="0 0 -6 -6"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+            </Grid>
+        </ControlTemplate>
+       
+        <ControlTemplate x:Key="DesignerItemTemplate" TargetType="ContentControl">
+            <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                <s:MoveThumb Template="{StaticResource MoveThumbTemplate}" 
+                             Cursor="SizeAll"
+                             />
+                <Control Template="{StaticResource ResizeDecoratorTemplate}"/>
+                <ContentPresenter Content="{TemplateBinding ContentControl.Content}"/>
+            </Grid>
+        </ControlTemplate>
+        
+    </UserControl.Resources>-->
+    <Grid x:Name="grid1">
+        <Border BorderBrush="Cyan">
+            <ScrollViewer x:Name="scrollviewer"
                       HorizontalScrollBarVisibility="Auto" 
                       VerticalScrollBarVisibility="Auto" 
                       >
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="ScrollChanged">
-                    <prism:InvokeCommandAction Command="{Binding ScrollChanged}" 
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="ScrollChanged">
+                        <prism:InvokeCommandAction Command="{Binding ScrollChanged}" 
                                                CommandParameter="{Binding ElementName=scrollviewer}"
                                                />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <Canvas x:Name="canvas" 
-                    Width="{Binding ActualWidth, ElementName=image}" 
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <Canvas x:Name="canvas" 
+                    Width ="{Binding ActualWidth, ElementName=image}" 
                     Height="{Binding ActualHeight, ElementName=image}"
                     RenderOptions.EdgeMode="Aliased"
                     RenderOptions.BitmapScalingMode="NearestNeighbor"
                     >
-                <Canvas.LayoutTransform>
-                    <ScaleTransform x:Name="scaleTransform"
+                    <Canvas.LayoutTransform>
+                        <ScaleTransform x:Name="scaleTransform"
                             ScaleX="{Binding ZoomRate}" 
                             ScaleY="{Binding ZoomRate}" />
-                </Canvas.LayoutTransform>
-                <Image x:Name="image" 
+                    </Canvas.LayoutTransform>
+                    <Image x:Name="image" 
                        Source="{Binding ImageSource}"
                        Stretch ="UniformToFill"
                        RenderOptions.BitmapScalingMode="NearestNeighbor"
                        RenderOptions.EdgeMode="Unspecified"/>
-                <WPF_CC_Sample:RotateLine_MouseDrag
-                                    x:Name="DragThumb"
-                                    Angle="{Binding RotAngle}"
-                                    CanvasActualHeight="{Binding ActualHeight, ElementName=image, Mode=OneWay}"
-                                    CanvasActualWidth="{Binding ActualWidth, ElementName=image, Mode=OneWay}">
-                    <Thumb.Template>
-                        <ControlTemplate>
-                            <Line x:Name="Line1" 
+                    <!--<WPF_CC_Sample:RotateLine_MouseDrag 
+                        Angle="{Binding RotAngle}"
+                        CanvasActualHeight="{Binding ActualHeight, ElementName=image}"
+                        CanvasActualWidth="{Binding ActualWidth, ElementName=image}">
+                        <Thumb.Template>
+                            <ControlTemplate>
+                                <Line x:Name="Line1" 
                                   X1="0" 
-                                  X2="{Binding ActualWidth, ElementName=DragThumb}" 
-                                  Y1="0" 
-                                  Y2="{Binding ActualHeight, ElementName=DragThumb}"
-                                  StrokeThickness="{Binding LineThickness}"
-                                  Stroke="Yellow" Opacity="1"/>
-                        </ControlTemplate>
-                    </Thumb.Template>
-                </WPF_CC_Sample:RotateLine_MouseDrag>
-            </Canvas>
-        </ScrollViewer>
+                                  Y1="0"
+                                  X2="{Binding ActualWidth, ElementName=image}"
+                                  Y2="{Binding ActualHeight, ElementName=image}"
+                                  StrokeThickness="{Binding LineThickness}" Stroke="Yellow" Opacity="0.5"/>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </WPF_CC_Sample:RotateLine_MouseDrag>-->
+                    <!--<ContentControl 
+                    Width="130"
+                    MinWidth="50"
+                    Height="130"
+                    MinHeight="50"
+                    Canvas.Top="10"
+                    Canvas.Left="10"
+                    Template="{StaticResource DesignerItemTemplate}">
+                    </ContentControl>-->
+                </Canvas>
+            </ScrollViewer>
+        </Border>
         <StackPanel Orientation="Vertical" Margin="8" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100">
             <ContentControl prism:RegionManager.RegionName="ImageControlerModule" ></ContentControl>
         </StackPanel>

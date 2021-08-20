@@ -86,16 +86,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitmapService.cs" />
-    <Compile Include="ControlImager.cs" />
-    <Compile Include="DownLoadImage.cs" />
     <Compile Include="ImageCoodinate.cs" />
     <Compile Include="InitModel.cs" />
+    <Compile Include="LineRotation.cs" />
     <Compile Include="LoadData.cs" />
     <Compile Include="LoadImager.cs" />
     <Compile Include="MainSomething.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScaleAdjuster.cs" />
     <Compile Include="SomethingClass.cs" />
+    <Compile Include="TestModelA.cs" />
     <Compile Include="TmpConf.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

@@ -55,7 +55,7 @@ namespace WPF_CC_Sample
 
         Point oldPoint;
         Point newPoint;
-        int d;
+
         RotateTransform transe = new RotateTransform();
 
         public RotateLine_MouseDrag()
@@ -73,26 +73,34 @@ namespace WPF_CC_Sample
                 {
                     ddd += Math.PI;
                 }
-                var angle = Math.Tan(ddd) * 180 / Math.PI;
+                Angle = Math.Tan(ddd) * 180 / Math.PI;
+
+
 
                 Debug.WriteLine($"new {Math.Tan(ddd) * 180 / Math.PI}");
 
-                var a = -Math.Tan(ddd);
+                //var a = -Math.Tan(ddd);
 
-                if (a < 0)
-                {
-                    var b = -a * centX;
-                    var exx = -b / a;
-                    var exxx = (CanvasActualHeight - b) / a;
-                    Canvas.SetLeft(this, exx);
-                    Canvas.SetTop(this, 0);
-                    Canvas.SetBottom(this, CanvasActualHeight);
-                    Canvas.SetRight(this, exxx);
-                }
-                else 
-                {
-                    var b = a * centX;
-                }
+                //if (a < 0)
+                //{
+                //    var b = -a * centX;
+                //    var x1 = -b / a;
+                //    var x2 = (CanvasActualHeight - b) / a;
+
+                //    //X1point = x1;
+                //    //X2point = x2;
+                //    //Y1point = X1point * a + b;
+                //    //Y2point = X2point * a + b;
+
+                //    //Canvas.SetLeft(this, exx);
+                //    //Canvas.SetTop(this, 0);
+                //    //Canvas.SetBottom(this, CanvasActualHeight);
+                //    //Canvas.SetRight(this, exxx);
+                //}
+                //else
+                //{
+                //    var b = a * centX;
+                //}
 
                 //double expectposiX = Canvas.GetLeft(this) + e.HorizontalChange;
                 //double expectposiY = Canvas.GetTop(this) + e.VerticalChange ;
@@ -102,88 +110,18 @@ namespace WPF_CC_Sample
                 //}
             };
 
-            DragStarted += (s, e) => 
-            {
-
-            };
-
             MouseMove += (s, e) =>
             {
-                List<Point> fourps = new List<Point>()
-                {
-                    new Point(0,0),
-                    new Point(CanvasActualWidth,0),
-                    new Point(0,CanvasActualHeight),
-                    new Point(CanvasActualWidth,CanvasActualHeight),
-                };
-
-                double centX = CanvasActualWidth / 2d;
-                double centY = CanvasActualHeight / 2d;
-                //double twopi = Math.PI / 2;
-
-                Point point = e.GetPosition(this);
-
                 oldPoint = e.GetPosition(this);
-
-                double ddd = Math.Atan2(point.X - centX, point.Y - centY);
-
-                if (ddd < 0)
-                {
-                    ddd += Math.PI;
-                }
-                var angle = Math.Tan(ddd) * 180 / Math.PI;
-
-                Debug.WriteLine($"old {angle.ToString()}");
-
                 this.Cursor = Cursors.SizeNESW;
 
-                //var radians = Math.Atan2(CurrentLeft, CurrentTop);
-
-
-                //double lineTop = Canvas.GetTop(this);
-                //double lineLeft = Canvas.GetLeft(this);
-                //double lineBottom = Canvas.GetBottom(this);
-                //double lineRight = Canvas.GetRight(this);
-
-
-
-
-                //if (Math.Abs(point.Y - expectposiTop) > 5.0 
-                //    && Math.Abs(point.X - expectposiLeft) > 5.0 
-                //     && Math.Abs(Angle) > 45)
-                //{.SizeNS;
-                //}
-
-                //    this.Cursor = Cursors
-
-                //Thumb b = s as Thumb;
-                //if (Mouse.Captured == b)
-                //{
-                //    Point origin = new Point(CanvasActualWidth / 2, CanvasActualHeight / 2);
-                //    var rawPoint = Mouse.GetPosition(b);
-                //    var transPoint = new Point(rawPoint.X - origin.X, rawPoint.Y - origin.Y);
-                //    var radians = Math.Atan2(transPoint.Y, transPoint.X);
-                //    var angle = radians * (180 / Math.PI);
-                //    transe.Angle = angle;
-                //    this.RenderTransform = transe;
-                //}
-                //    double expectposi = Canvas.GetLeft(this);
-                //Point point = e.GetPosition(this);
-                //if (Math.Abs(point.X - expectposi) > 5.0)
-                //{
-                //    this.Cursor = Cursors.SizeWE;
-                //}
             };
         }
-
-
-
         public double Angle
         {
             get { return (double)GetValue(AngleProperty); }
             set { SetValue(AngleProperty, value); }
         }
-
         // Using a DependencyProperty as the backing store for Angle.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty AngleProperty =
             DependencyProperty.Register("Angle", typeof(double), typeof(RotateLine_MouseDrag), new PropertyMetadata(0d));

@@ -12,10 +12,16 @@
              Height="25" >
     <Grid>
         <StackPanel Orientation="Horizontal">
+            <!--<xctk:SingleUpDown Width="100"
+                               ParsingNumberStyle="Float"
+                               Value="{Binding ScaleNum, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,0" 
+                               Increment=".01"
+                               Minimum="{Binding MinValue}"
+                               />-->
             <xctk:SingleUpDown Width="100"
                                ParsingNumberStyle="Float"
                                Value="{Binding ScaleNum, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,0" 
-                               Increment=".1"
+                               Increment=".01"
                                />
         </StackPanel>
     </Grid>

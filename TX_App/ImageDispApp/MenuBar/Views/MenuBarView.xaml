@@ -11,6 +11,7 @@
     <Menu>
         <MenuItem Header="ファイル(_F)" Height="25">
             <MenuItem Header="開く(_M)" Command="{Binding OpenCmd}" Height="25"/>
+            <MenuItem Header="クリア(_C)" Command="{Binding ClearCmd}" Height="25"/>
             <MenuItem Header="終了(_E)" Command="{Binding ExitApp}" Height="25"/>
         </MenuItem>
     </Menu>

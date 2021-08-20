@@ -28,7 +28,6 @@ namespace DispApp
 
             containerRegistry.RegisterSingleton<IInitModel,InitModel>();
 
-
             containerRegistry.RegisterSingleton<ILoadData, LoadData>();
             
             containerRegistry.RegisterSingleton<ILoadImager, LoadImager>();

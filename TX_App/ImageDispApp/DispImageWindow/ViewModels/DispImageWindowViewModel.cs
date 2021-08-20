@@ -1,9 +1,12 @@
 ﻿using MainModel;
 using Microsoft.Xaml.Behaviors.Core;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +18,7 @@ using Unity;
 
 namespace DispImageWindow.ViewModels
 {
-    public class DispImageWindowViewModel : BindableBase
+    public class DispImageWindowViewModel : BindableBase, IDestructible
     {
         /// <summary>
         /// 画像開く処理完了？
@@ -40,50 +43,70 @@ namespace DispImageWindow.ViewModels
             set { SetProperty(ref _ImageSource, value); }
         }
         /// <summary>
-        /// 線の現在位置X
+        /// 線の現在位置X1
         /// </summary>
-        private double _CurrentLeft;
-        public double CurrentLeft
+        private double _PointX1;
+        public double PointX1
         {
-            get { return _CurrentLeft; }
-            set { SetProperty(ref _CurrentLeft, value); }
+            get { return _PointX1; }
+            set { SetProperty(ref _PointX1, value); }
         }
         /// <summary>
-        /// 線の現在位置Y
+        /// 線の現在位置X2
         /// </summary>
-        private double _CurrentTop;
-        public double CurrentTop
+        private double _PointX2;
+        public double PointX2
         {
-            get { return _CurrentTop; }
-            set { SetProperty(ref _CurrentTop, value); }
+            get { return _PointX2; }
+            set { SetProperty(ref _PointX2, value); }
         }
         /// <summary>
-        /// 回転線の現在位置X
+        /// 回転線の現在位置Y1
         /// </summary>
-        private double _CurrentRight;
-        public double CurrentRight
+        private double _PointY1;
+        public double PointY1
         {
-            get { return _CurrentRight; }
-            set { SetProperty(ref _CurrentRight, value); }
+            get { return _PointY1; }
+            set { SetProperty(ref _PointY1, value); }
         }
         /// <summary>
         /// 回転線の現在位置Y
         /// </summary>
-        private double _CurrentBottom;
-        public double CurrentBottom
+        private double _PointY2;
+        public double PointY2
         {
-            get { return _CurrentBottom; }
-            set { SetProperty(ref _CurrentBottom, value); }
+            get { return _PointY2; }
+            set { SetProperty(ref _PointY2, value); }
         }
         /// <summary>
         /// 回転線の角度
         /// </summary>
+        //private double _RotAngle;
+        //public double RotAngle
+        //{
+        //    get { return _RotAngle; }
+        //    set { SetProperty(ref _RotAngle, value); }
+        //}
+
+        ///// <summary>
+        /// 回転線の角度
+        ///// </summary>
         private double _RotAngle;
         public double RotAngle
         {
-            get { return _RotAngle; }
-            set { SetProperty(ref _RotAngle, value); }
+            get => _RotAngle;
+            set
+            {
+                if (_RotAngle == value)return;
+                
+                _RotAngle = value;
+                
+                RaisePropertyChanged();
+
+            }
         }
+
+
         /// <summary>
         /// 線の太さ
         /// </summary>
@@ -101,14 +124,19 @@ namespace DispImageWindow.ViewModels
         /// 画像倍率調整I/F
         /// </summary>
         private readonly IScaleAdjuster _Adjuter;
-
         /// <summary>
         /// スクロール変更
         /// </summary>
         public ICommand ScrollChanged { get; private set; }
+        /// <summary>
+        /// MV → Vへの操作用
+        /// </summary>
+        private readonly IEventAggregator _EventAggregator;
 
         public DispImageWindowViewModel(IUnityContainer service)
         {
+
+            _EventAggregator = service.Resolve<IEventAggregator>();
 
             _ImageSource = new BitmapImage();
             LineThickness = 1;
@@ -123,6 +151,20 @@ namespace DispImageWindow.ViewModels
                     ImageSource = li.DispImage;
                 }
             };
+            _LoadImage.ClearImage += (s, e) =>
+            {
+                if (s is LoadImager li)
+                {
+                    _IsOpenProc = true;
+                    ZoomRate = 0.1F;
+                    ImageSource = li.NullImage;
+
+                   // Task.WaitAll(Task.Delay(1000));
+                }
+
+                _EventAggregator.GetEvent<PubSubEvent<object>>().Publish("");
+
+            };
 
 
             _Adjuter = service.Resolve<IScaleAdjuster>();
@@ -135,24 +177,30 @@ namespace DispImageWindow.ViewModels
                     if (ZoomRate != 0)
                     {
 
-                        CurrentLeft = 0;
-                        CurrentTop = 0;
-                        double centX = ImageSource.Width / 2d;
-                        double centY = ImageSource.Height / 2d;
-                        //var dddd = new Point(this.designerItem.Width * this.designerItem.RenderTransformOrigin.X,
-                        //          this.designerItem.Height * this.designerItem.RenderTransformOrigin.Y)
-                        var ddd = Math.Atan2(centX, centY);
+                        //double centX = sa.ImageHeight / 2d;
+                        //double centY = sa.ImageWidth / 2d;
+                        //double ddd = Math.Atan2(0 - centX, 0 - centY);
+                        //double ang = (ddd + Math.PI/4) * (180 / Math.PI);
+                        //if (ang < 0)
+                        //{
+                        //    ang += 360;
+                        //}
+                        //RotAngle = ang;
 
-                        var radians = Math.Atan2(CurrentLeft, CurrentTop);
-                        var angle = radians * (180 / Math.PI);
+                        //if (ddd < 0)
+                        //{
+                        //    ddd += Math.PI;
+                        //}
 
-                        CurrentLeft = 0;
-                        CurrentTop = ImageSource.Height / 2 + ImageSource.Height / 4;
-                        CurrentRight = 0;
-                        CurrentBottom = ImageSource.Height / 2 + ImageSource.Height / 4;
-                        RotAngle = 30;
-                        //var radians = Math.Atan2(transPoint.Y, transPoint.X);
-                        //var angle = radians * (180 / Math.PI);
+                        //var a = Math.Tan((RotAngle*Math.PI)/180);
+                        //var b = centY - a * centX;
+
+
+                        //PointY1 = b;
+                        //PointX1 = (PointY1 - b) / a;
+                        //PointY2 = a * sa.ImageWidth + b;
+                        //PointX2 = (sa.ImageHeight - b)/ a;
+
 
                         var tmp = 1F / (ZoomRate * 0.5) * 100;
                         LineThickness = (float)(Math.Ceiling(tmp) / 100F);
@@ -164,12 +212,20 @@ namespace DispImageWindow.ViewModels
             {
                 if (_IsOpenProc && d is ScrollViewer sv)
                 {
-                    _Adjuter.DoCaleInitScale((float)sv.ActualWidth, (float)sv.ActualHeight);
+                    //Debug.WriteLine();
+                    var width = sv.ActualWidth;// + sv.DesiredSize.Width;
+                    var height = sv.ActualHeight;// + sv.DesiredSize.Height;
+                    _Adjuter.DoCaleInitScale((float)width, (float)height);
                     _IsOpenProc = false;
                 }
             });
 
             _LoadImage.RequestImage();
+        }
+
+        public void Destroy()
+        {
+
         }
     }
 }

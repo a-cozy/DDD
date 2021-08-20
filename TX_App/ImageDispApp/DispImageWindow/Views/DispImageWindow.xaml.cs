@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prism.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,24 @@ namespace DispImageWindow.Views
     /// </summary>
     public partial class DispImageWindow : UserControl
     {
-        public DispImageWindow()
+        public DispImageWindow(IEventAggregator agr)
         {
             InitializeComponent();
+
+            agr.GetEvent<PubSubEvent<object>>().Subscribe((obj) =>
+            {
+                UpdateLayout();  
+            });
+            //    //if (obj is DragDeltaEventArgs ddea)
+            //    //{
+            //    //    var dd = ddea.Source as Thumb;
+            //    //    double expectposi = Canvas.GetLeft(thumb1) + ddea.HorizontalChange;
+            //    //    if (expectposi > 0 && expectposi < canvas.ActualWidth)
+            //    //    {
+            //    //        Canvas.SetLeft(thumb1, expectposi);
+            //    //    }
+            //    //}
+            //});
         }
     }
 }

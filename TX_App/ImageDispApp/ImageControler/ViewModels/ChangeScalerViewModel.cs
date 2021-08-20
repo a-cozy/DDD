@@ -32,6 +32,13 @@ namespace ImageControler.ViewModels
                 }
             }
         }
+
+        private float _MinValue;
+        public float MinValue
+        {
+            get { return _MinValue; }
+            set { SetProperty(ref _MinValue, value); }
+        }
         /// <summary>
         /// 画像倍率調整I/F
         /// </summary>
@@ -48,6 +55,7 @@ namespace ImageControler.ViewModels
                 if (s is ScaleAdjuster sa)
                 {
                     ScaleNum = sa.ZoomRate.ToString("00.00");
+                    MinValue = sa.MinValue;
                 }
             };
             ScaleNum = "0.00";
