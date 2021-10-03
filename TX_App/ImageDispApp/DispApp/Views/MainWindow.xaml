@@ -16,6 +16,6 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <ContentControl Grid.Row="0" prism:RegionManager.RegionName="MenuBarModule" ></ContentControl>
-        <ContentControl Grid.Row="2" prism:RegionManager.RegionName="ImageCtrlDispModule" ></ContentControl>
+        <ContentControl Grid.Row="2" prism:RegionManager.RegionName="DispImageModule" ></ContentControl>
     </Grid>
 </Window>

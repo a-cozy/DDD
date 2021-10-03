@@ -78,7 +78,16 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TX_Model\MainModel\MainModel.csproj">
+      <Project>{3453B1B5-B6F4-49FA-BAD2-6CFC9E368A8D}</Project>
+      <Name>MainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DispImageWindow\DispImageWindow.csproj">
+      <Project>{AE4E1D64-4F3C-4328-B2D4-FB3B1C40EB51}</Project>
+      <Name>DispImageWindow</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ImageCtrlDispView.xaml">
       <SubType>Designer</SubType>

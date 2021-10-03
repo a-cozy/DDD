@@ -3,6 +3,8 @@ using Microsoft.Xaml.Behaviors.Core;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Navigation;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,21 +19,8 @@ using Unity;
 
 namespace DispImage.ViewModels
 {
-    public class DispImageViewModel : BindableBase
+    public class DispImageViewModel : BindableBase,IDisposable
     {
-        /// <summary>
-        /// 画像開く処理完了？
-        /// </summary>
-        private bool _IsOpenProc = false;
-        /// <summary>
-        /// 画像倍率
-        /// </summary>
-        private float _ZoomRate;
-        public float ZoomRate
-        {
-            get { return _ZoomRate; }
-            set { SetProperty(ref _ZoomRate, value); }
-        }
         /// <summary>
         /// 表示画像
         /// </summary>
@@ -41,170 +30,50 @@ namespace DispImage.ViewModels
             get { return _ImageSource; }
             set { SetProperty(ref _ImageSource, value); }
         }
-        /// <summary>
-        /// 線の現在位置X
-        /// </summary>
-        private double _CurrentX;
-        public double CurrentX
-        {
-            get { return _CurrentX; }
-            set { SetProperty(ref _CurrentX, value); }
-        }
-        /// <summary>
-        /// 線の現在位置Y
-        /// </summary>
-        private double _CurrentY;
-        public double CurrentY
-        {
-            get { return _CurrentY; }
-            set { SetProperty(ref _CurrentY, value); }
-        }
-        /// <summary>
-        /// 回転線の現在位置X
-        /// </summary>
-        private double _CurrentRotX;
-        public double CurrentRotX
-        {
-            get { return _CurrentRotX; }
-            set { SetProperty(ref _CurrentRotX, value); }
-        }
-        /// <summary>
-        /// 回転線の現在位置Y
-        /// </summary>
-        private double _CurrentRotY;
-        public double CurrentRotY
-        {
-            get { return _CurrentRotY; }
-            set { SetProperty(ref _CurrentRotY, value); }
-        }
-        /// <summary>
-        /// 回転線の角度
-        /// </summary>
-        private double _RotAngle;
-        public double RotAngle
-        {
-            get { return _RotAngle; }
-            set { SetProperty(ref _RotAngle, value); }
-        }
-        /// <summary>
-        /// マウス位置_X
-        /// </summary>
-        private double _MouseX;
-        public double MouseX
-        {
-            get { return _MouseX; }
-            set { SetProperty(ref _MouseX, value); }
-        }
-        /// <summary>
-        /// マウス位置_Y
-        /// </summary>
-        private double _MouseY;
-        public double MouseY
-        {
-            get { return _MouseY; }
-            set { SetProperty(ref _MouseY, value); }
-        }
-        /// <summary>
-        /// 線の太さ
-        /// </summary>
-        private float _LineThickness;
-        public float LineThickness
-        {
-            get { return _LineThickness; }
-            set { SetProperty(ref _LineThickness, value); }
-        }
 
-        /// <summary>
-        /// スクロール変更
-        /// </summary>
-        public ICommand ScrollChanged { get; private set; }
-        /// <summary>
-        /// ラインのドラッグ
-        /// </summary>
-        public ICommand ThumbDragDeltaCommand { get; private set; }
-        /// <summary>
-        /// 画像ローダー
-        /// </summary>
-        private readonly IImageCoodinate _ImageCoodinate;
-        /// <summary>
-        /// 画像ローダー
-        /// </summary>
+        private readonly IRegionManager _RegionManager;
+
         private readonly ILoadImager _LoadImage;
-        /// <summary>
-        /// 画像倍率調整I/F
-        /// </summary>
-        private readonly IScaleAdjuster _Adjuter;
-        /// <summary>
-        /// MV → Vへの操作用
-        /// </summary>
-        //private readonly IEventAggregator _EventAggregator;
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="service"></param>
         public DispImageViewModel(IUnityContainer service)
         {
-            //_EventAggregator = service.Resolve<IEventAggregator>();
+            _RegionManager = service.Resolve<IRegionManager>();
 
             _ImageSource = new BitmapImage();
-            LineThickness = 1;
 
             _LoadImage = service.Resolve<ILoadImager>();
-            _LoadImage.CmpLoadImage += (s, e) =>
+            _LoadImage.EndLoadImage += (s, e) =>
             {
-                if (s is LoadImager li)
-                {
-                    _IsOpenProc = true;
-                    ZoomRate = 1;
-                    ImageSource = li.DispImage;
-                }
+                Debug.WriteLine($"{nameof(DispImage)} ViewModel imageloaded");
+                ImageSource = (s as LoadImager).DispImage;
             };
 
-            _Adjuter = service.Resolve<IScaleAdjuster>();
-            _Adjuter.ChangeZoomRate += (s, e) =>
+            _LoadImage.ClearImage += (s, e) => 
             {
-                if (s is ScaleAdjuster sa)
-                {
-                    ZoomRate = sa.ZoomRate;
-
-
-                    if (ZoomRate != 0)
-                    {
-                        CurrentX = ImageSource.Width / 2;
-                        CurrentY = ImageSource.Height / 2;
-                        RotAngle = 45;
-                        var tmp = 1F / (ZoomRate * 0.5) * 100;
-                        LineThickness = (float)(Math.Ceiling(tmp) / 100F);
-                    }
-                }
+                Debug.WriteLine($"{nameof(DispImage)} ViewModel Cleared");
+                RemoveModule<DispImage.Views.DispImage>("DispImageModule");
             };
+        }
 
-            _ImageCoodinate = service.Resolve<IImageCoodinate>();
-            _ImageCoodinate.PropertyChanged += (s, e) =>
+        private void RemoveModule<T>(string regionName) where T:UserControl
+        {
+            var viewToRemove = _RegionManager.Regions[regionName].
+                Views.FirstOrDefault(p => p.GetType().Name == typeof(T).Name);
+
+            if(viewToRemove != null)
             {
-                if (s is ImageCoodinate ic)
-                {
-                    //CurrentX = (int)ic.CurrentX * (int)ZoomRate;
-                    //CurrentX = (int)ic.CurrentX;
-                    //_EventAggregator.GetEvent<PubSubEvent<float>>().Publish(CurrentX);
-                }
-            };
-
-            ThumbDragDeltaCommand = new ActionCommand(x =>
-            {
-               // _EventAggregator.GetEvent<PubSubEvent<object>>().Publish(x);
-
-                //Debug.WriteLine(CurrentX);
-            });
-
-            ScrollChanged = new ActionCommand((d) =>
-            {
-                if (_IsOpenProc && d is ScrollViewer sv)
-                {
-                    _Adjuter.DoCaleInitScale((float)sv.ActualWidth, (float)sv.ActualHeight);
-                    _IsOpenProc = false;
-                }
-            });
+                _RegionManager.Regions[regionName].Remove(viewToRemove);
+            }
+        }
+        /// <summary>
+        /// 破棄
+        /// </summary>
+        public void Dispose()
+        {
+            Debug.WriteLine($"{nameof(DispImage)} ViewModel is disposing");
         }
     }
 }

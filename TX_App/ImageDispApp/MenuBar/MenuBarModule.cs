@@ -9,8 +9,8 @@ namespace MenuBar
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            IRegionManager regionMan = containerProvider.Resolve<IRegionManager>();
-            _ = regionMan.RegisterViewWithRegion(nameof(MenuBarModule), typeof(Views.MenuBarView));
+            //IRegionManager regionMan = containerProvider.Resolve<IRegionManager>();
+            //_ = regionMan.RegisterViewWithRegion(nameof(MenuBarModule), typeof(Views.MenuBarView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

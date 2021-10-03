@@ -86,9 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitmapService.cs" />
+    <Compile Include="Point2Center.cs" />
     <Compile Include="ImageCoodinate.cs" />
     <Compile Include="InitModel.cs" />
-    <Compile Include="LineRotation.cs" />
+    <Compile Include="Point2DegRadWin.cs" />
     <Compile Include="LoadData.cs" />
     <Compile Include="LoadImager.cs" />
     <Compile Include="MainSomething.cs" />

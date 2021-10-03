@@ -14,5 +14,8 @@
             <MenuItem Header="クリア(_C)" Command="{Binding ClearCmd}" Height="25"/>
             <MenuItem Header="終了(_E)" Command="{Binding ExitApp}" Height="25"/>
         </MenuItem>
+        <MenuItem Header="Settings(_S)" Height="25">
+            <MenuItem Header="About us(_A)" Command="{Binding ShowDialogAboutus}" Height="25"/>
+        </MenuItem>
     </Menu>
 </UserControl>

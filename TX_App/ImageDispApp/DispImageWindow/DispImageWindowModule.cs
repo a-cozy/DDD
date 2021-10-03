@@ -9,8 +9,8 @@ namespace DispImageWindow
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            IRegionManager regionMan = containerProvider.Resolve<IRegionManager>();
-            _ = regionMan.RegisterViewWithRegion(nameof(DispImageWindowModule), typeof(Views.DispImageWindow));
+            //IRegionManager regionMan = containerProvider.Resolve<IRegionManager>();
+            //_ = regionMan.RegisterViewWithRegion(nameof(DispImageWindowModule), typeof(Views.DispImageWindow));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

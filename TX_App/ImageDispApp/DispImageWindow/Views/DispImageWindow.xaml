@@ -76,7 +76,7 @@
                        Stretch ="UniformToFill"
                        RenderOptions.BitmapScalingMode="NearestNeighbor"
                        RenderOptions.EdgeMode="Unspecified"/>
-                    <!--<WPF_CC_Sample:RotateLine_MouseDrag 
+                    <WPF_CC_Sample:RotateLine_MouseDrag 
                         Angle="{Binding RotAngle}"
                         CanvasActualHeight="{Binding ActualHeight, ElementName=image}"
                         CanvasActualWidth="{Binding ActualWidth, ElementName=image}">
@@ -90,7 +90,7 @@
                                   StrokeThickness="{Binding LineThickness}" Stroke="Yellow" Opacity="0.5"/>
                             </ControlTemplate>
                         </Thumb.Template>
-                    </WPF_CC_Sample:RotateLine_MouseDrag>-->
+                    </WPF_CC_Sample:RotateLine_MouseDrag>
                     <!--<ContentControl 
                     Width="130"
                     MinWidth="50"

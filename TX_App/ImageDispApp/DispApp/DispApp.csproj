@@ -65,6 +65,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DisposeBehavior.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -128,6 +129,10 @@
     <ProjectReference Include="..\DispImageWindow\DispImageWindow.csproj">
       <Project>{AE4E1D64-4F3C-4328-B2D4-FB3B1C40EB51}</Project>
       <Name>DispImageWindow</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DispImage\DispImage.csproj">
+      <Project>{67DF8B4F-10BC-4447-A603-32B8CBBA5FC3}</Project>
+      <Name>DispImage</Name>
     </ProjectReference>
     <ProjectReference Include="..\ImageControler\ImageControler.csproj">
       <Project>{BC24949F-9E9F-4673-AB61-EA555BB2DD6E}</Project>

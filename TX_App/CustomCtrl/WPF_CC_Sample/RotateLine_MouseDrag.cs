@@ -76,7 +76,6 @@ namespace WPF_CC_Sample
                 Angle = Math.Tan(ddd) * 180 / Math.PI;
 
 
-
                 Debug.WriteLine($"new {Math.Tan(ddd) * 180 / Math.PI}");
 
                 //var a = -Math.Tan(ddd);

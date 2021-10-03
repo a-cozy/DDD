@@ -1,5 +1,6 @@
 ﻿using CommonDialogs;
 using DispApp.Views;
+using DispImage;
 using DispImageWindow;
 using ImageControler;
 using ImageCtrlDisp;
@@ -8,6 +9,7 @@ using MenuBar;
 using MessageBoxLib;
 using Prism.Ioc;
 using Prism.Modularity;
+using Prism.Regions;
 using System.Windows;
 
 namespace DispApp
@@ -50,13 +52,13 @@ namespace DispApp
             //メニューバー用
             moduleCatalog.AddModule<MenuBarModule>(InitializationMode.WhenAvailable);
             //センタ用
-            //moduleCatalog.AddModule<DispImageModule>(InitializationMode.WhenAvailable);
-            //画像制御用
-            moduleCatalog.AddModule<ImageControlerModule>(InitializationMode.WhenAvailable);
-            //画像制御用
-            moduleCatalog.AddModule<ImageCtrlDispModule>(InitializationMode.WhenAvailable);
-            //画像制御用
-            moduleCatalog.AddModule<DispImageWindowModule>(InitializationMode.WhenAvailable);
+            moduleCatalog.AddModule<DispImageModule>(InitializationMode.WhenAvailable);
+            ////画像制御用
+            //moduleCatalog.AddModule<ImageControlerModule>(InitializationMode.WhenAvailable);
+            ////画像制御用
+            //moduleCatalog.AddModule<ImageCtrlDispModule>(InitializationMode.WhenAvailable);
+            ////画像制御用
+            //moduleCatalog.AddModule<DispImageWindowModule>(InitializationMode.WhenAvailable);
             
 
 
@@ -64,6 +66,12 @@ namespace DispApp
             //moduleCatalog.AddModule<SampleDataGridModule>(InitializationMode.WhenAvailable);
 
             base.ConfigureModuleCatalog(moduleCatalog);
+        }
+
+        protected override void ConfigureDefaultRegionBehaviors(IRegionBehaviorFactory regionBehaviors)
+        {
+            regionBehaviors.AddIfMissing(DisposeBehavior.Key, typeof(DisposeBehavior));
+            base.ConfigureDefaultRegionBehaviors(regionBehaviors);
         }
     }
 }

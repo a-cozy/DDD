@@ -29,6 +29,10 @@ namespace MainModel
         /// <summary>
         /// 読込完了
         /// </summary>
+        public event EventHandler EndLoadImage;
+        /// <summary>
+        /// 読込完了
+        /// </summary>
         public event EventHandler CmpLoadImage;
         /// <summary>
         /// 読込クリア
@@ -39,19 +43,6 @@ namespace MainModel
         /// </summary>
         public LoadImager(IInitModel init)
         {
-            //_InitModel = init;
-            //_InitModel.DoInit += (s, e) =>
-            //{
-            //    if (s is InitModel im)
-            //    {
-            //        ImgPath = im.CurrentDir;
-            //        if (File.Exists(ImgPath))
-            //        {
-            //            NewMethod1(ImgPath);
-            //        }
-            //    }
-            //};
-
             int max = ushort.MaxValue;
 
             int min = ushort.MinValue;
@@ -91,6 +82,8 @@ namespace MainModel
                 //占有しないパターン-2
                 //NewMethod(path);
             }
+
+            EndLoadImage?.Invoke(this, new EventArgs());
         }
 
             void NewMethod1(string path)
@@ -160,9 +153,13 @@ namespace MainModel
         /// </summary>
         event EventHandler ClearImage;
         /// <summary>
-        /// 読込完了
+        /// 読込中
         /// </summary>
         event EventHandler CmpLoadImage;
+        /// <summary>
+        /// 読込完了
+        /// </summary>
+        event EventHandler EndLoadImage;
         /// <summary>
         /// ファイル開
         /// </summary>
