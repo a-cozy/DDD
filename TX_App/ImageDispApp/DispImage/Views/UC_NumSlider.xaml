@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="DispImage.Views.UC_NumSlider"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DispImage.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="100">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" BorderBrush="Cyan" BorderThickness="1">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button Content="実行" Background="LightGray" Command="{}"></Button>
+            </StackPanel>
+        </Border>
+        <Border Grid.Column="1" BorderBrush="LimeGreen" BorderThickness="1">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="AAA" Foreground="Aqua"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

@@ -30,7 +30,6 @@ namespace DispImage.ViewModels
             get { return _ImageSource; }
             set { SetProperty(ref _ImageSource, value); }
         }
-
         private readonly IRegionManager _RegionManager;
 
         private readonly ILoadImager _LoadImage;
@@ -57,7 +56,11 @@ namespace DispImage.ViewModels
                 RemoveModule<DispImage.Views.DispImage>("DispImageModule");
             };
         }
-
+        /// <summary>
+        /// ViewModel削除
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="regionName"></param>
         private void RemoveModule<T>(string regionName) where T:UserControl
         {
             var viewToRemove = _RegionManager.Regions[regionName].

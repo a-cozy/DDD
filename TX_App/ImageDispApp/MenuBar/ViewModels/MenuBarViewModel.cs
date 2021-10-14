@@ -2,10 +2,13 @@
 //using MainModel;
 using CommonDialogs;
 using MainModel;
+using MenuBar.Views;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +31,10 @@ namespace MenuBar.ViewModels
         /// </summary>
         public DelegateCommand ClearCmd { get; private set; }
         /// <summary>
+        /// 作成者のダイアログ表示コマンド
+        /// </summary>
+        public DelegateCommand ShowDialogAboutUs { get; private set; }
+        /// <summary>
         /// メインサポートクラスI/F
         /// </summary>
         private readonly IMainSomething _MainSomething;
@@ -39,6 +46,10 @@ namespace MenuBar.ViewModels
         /// コモンダイアログ表示サービスを表します。
         /// </summary>
         private readonly ICommonDialogService _ComDialogService = null;
+        /// <summary>
+        /// 確認ダイアログ表示サービス
+        /// </summary>
+        private readonly IDialogService _PrismDialogService = null;
         /// <summary>
         /// 
         /// </summary>
@@ -74,6 +85,16 @@ namespace MenuBar.ViewModels
             ClearCmd = new DelegateCommand(() => 
             {
                 _LoadImage.DoClear();
+            });
+
+            _PrismDialogService = service.Resolve<IDialogService>();
+            ShowDialogAboutUs = new DelegateCommand(() =>
+            {
+                IDialogParameters param = new DialogParameters();
+                _PrismDialogService.ShowDialog(nameof(AboutUsDialog), param, x=> 
+                {
+                    Debug.WriteLine("AboutUsDialog");
+                });
             });
         }
     }

@@ -6,6 +6,8 @@ using ImageControler;
 using ImageCtrlDisp;
 using MainModel;
 using MenuBar;
+using MenuBar.ViewModels;
+using MenuBar.Views;
 using MessageBoxLib;
 using Prism.Ioc;
 using Prism.Modularity;

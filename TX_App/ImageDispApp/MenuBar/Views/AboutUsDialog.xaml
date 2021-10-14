@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="MenuBar.Views.AboutUsDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MenuBar.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="300"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="prism:Dialog.WindowStartupLocation" 
+                    Value="CenterOwner"/>
+            <Setter Property="ResizeMode" 
+                    Value="NoResize"/>
+            <Setter Property="ShowInTaskbar"
+                    Value="True"/>
+            <Setter Property="SizeToContent"
+                    Value="Manual"/>
+            <Setter Property="Width"
+                    Value="300"/>
+            <Setter Property="Height"
+                    Value="150"/>
+        </Style>
+    </prism:Dialog.WindowStyle>
+    <Grid Margin="10, 10, 10, 15">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+				   HorizontalAlignment="Stretch"
+				   VerticalAlignment="Stretch"
+				   TextWrapping="Wrap"
+				   Text="{Binding Message}"/>
+        <Button Grid.Row="1"
+				Content="OK"
+				Margin="0, 10, 0, 0"
+				HorizontalAlignment="Right"
+				Width="75" Height="25"
+				Command="{Binding OkCommand}" />
+    </Grid>
+</UserControl>
