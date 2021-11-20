@@ -4,35 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DispImage.Views"
+             xmlns:uclocal="clr-namespace:DispImage"
              xmlns:prism="http://prismlibrary.com/" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <Grid Grid.Column="0">
-        <Border Grid.Column="0" BorderBrush="Magenta" BorderThickness="1">
-            <ScrollViewer x:Name="scrollviewer"
-                      HorizontalScrollBarVisibility="Auto" 
-                      VerticalScrollBarVisibility="Auto" 
-                      >
-                <Canvas x:Name="canvas" 
-                    Width ="{Binding ActualWidth, ElementName=image}" 
-                    Height="{Binding ActualHeight, ElementName=image}"
-                    RenderOptions.EdgeMode="Aliased"
-                    RenderOptions.BitmapScalingMode="NearestNeighbor"
-                    >
-                    <Canvas.LayoutTransform>
-                        <ScaleTransform x:Name="scaleTransform"
-                            ScaleX="{Binding ZoomRate}" 
-                            ScaleY="{Binding ZoomRate}" />
-                    </Canvas.LayoutTransform>
-                    <Image x:Name="image" 
-                       Source="{Binding ImageSource}"
-                       Stretch ="UniformToFill"
-                       RenderOptions.BitmapScalingMode="NearestNeighbor"
-                       RenderOptions.EdgeMode="Unspecified"/>
-                </Canvas>
-            </ScrollViewer>
-        </Border>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <uclocal:UC_DispImage/>
+        <StackPanel Orientation="Vertical" Margin="8" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <uclocal:UC_NumSlider ImageFileName="{Binding Title}"/>
+            <uclocal:UC_ZoomSlider 
+                MaxValueSlider="{Binding MaxSlider}"
+                MinValueSlider="{Binding MinSlider}"
+                ScaleNum="{Binding ZoomScale, Mode=TwoWay}"
+                />
+        </StackPanel>
     </Grid>
 </UserControl>

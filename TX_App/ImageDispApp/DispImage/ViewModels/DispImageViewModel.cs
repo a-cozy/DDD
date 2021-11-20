@@ -8,6 +8,7 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,45 @@ namespace DispImage.ViewModels
             get { return _ImageSource; }
             set { SetProperty(ref _ImageSource, value); }
         }
+        /// <summary>
+        /// タイトル
+        /// </summary>
+        private string _Title;
+        /// <summary>
+        /// タイトル
+        /// </summary>
+        public string Title
+        {
+            get { return _Title; }
+            set { SetProperty(ref _Title, value); }
+        }
+        /// <summary>
+        /// Zoomレート
+        /// </summary>
+        private float _ZoomScale;
+        public float ZoomScale
+        {
+            get { return _ZoomScale; }
+            set { SetProperty(ref _ZoomScale, value); }
+        }
+        /// <summary>
+        /// 最大Zoomレート
+        /// </summary>
+        private float _MaxSlider;
+        public float MaxSlider
+        {
+            get { return _MaxSlider; }
+            set { SetProperty(ref _MaxSlider, value); }
+        }
+        /// <summary>
+        /// 最大Zoomレート
+        /// </summary>
+        private float _MinSlider;
+        public float MinSlider
+        {
+            get { return _MinSlider; }
+            set { SetProperty(ref _MinSlider, value); }
+        }
         private readonly IRegionManager _RegionManager;
 
         private readonly ILoadImager _LoadImage;
@@ -41,6 +81,9 @@ namespace DispImage.ViewModels
         {
             _RegionManager = service.Resolve<IRegionManager>();
 
+            MaxSlider = 4;
+            ZoomScale = 2;
+
             _ImageSource = new BitmapImage();
 
             _LoadImage = service.Resolve<ILoadImager>();
@@ -48,6 +91,8 @@ namespace DispImage.ViewModels
             {
                 Debug.WriteLine($"{nameof(DispImage)} ViewModel imageloaded");
                 ImageSource = (s as LoadImager).DispImage;
+                Title = Path.GetFileName((s as LoadImager).ImgPath);
+                Debug.WriteLine($"{Title}");
             };
 
             _LoadImage.ClearImage += (s, e) => 

@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="DispImage.UC_ZoomSlider"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DispImage"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <xctk:SingleUpDown 
+                x:Name="NumUpDown"
+                Width="80"
+                ParsingNumberStyle="Float"
+                Margin="4" 
+                Increment=".01"
+                Value="{Binding ElementName=Bslider,Path=Value}"/>
+            <Slider x:Name="Bslider"
+                    Margin="8"
+                    Width ="200" 
+                    Value="{Binding ScaleNum, 
+                            RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:UC_ZoomSlider}}}"
+                    Minimum="{Binding MinValueSlider,
+                            RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:UC_ZoomSlider}}}"
+                    Maximum="{Binding MaxValueSlider,
+                            RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:UC_ZoomSlider}}}"
+                    />
+        </StackPanel>            
+    </Grid>
+</UserControl>
