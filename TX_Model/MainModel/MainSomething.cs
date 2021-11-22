@@ -32,18 +32,18 @@ namespace MainModel
 
         public MainSomething(IUnityContainer container)
         {
-            _LoadData = container.Resolve<ILoadData>();
-            _LoadData.EndLoadData += (s, e) =>
-            {
-                if (s is LoadData ld)
-                {
-                    FileName = ld.FileName;
-                }
-            };
+            //_LoadData = container.Resolve<ILoadData>();
+            //_LoadData.EndLoadData += (s, e) =>
+            //{
+            //    if (s is LoadData ld)
+            //    {
+            //        FileName = ld.FileName;
+            //    }
+            //};
 
-            UUID = Guid.NewGuid().ToString();
+            //UUID = Guid.NewGuid().ToString();
 
-            _LoadData.RequestEvent();
+            //_LoadData.RequestEvent();
         }
         /// <summary>
         /// ファイルを開く

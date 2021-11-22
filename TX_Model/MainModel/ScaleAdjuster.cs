@@ -39,11 +39,11 @@ namespace MainModel
         /// <summary>
         /// 画像高さ
         /// </summary>
-        public float ImageHeight { get; private set; }
+        public float HeightDpi { get; private set; }
         /// <summary>
         /// 画像幅
         /// </summary>
-        public float ImageWidth { get; private set; }
+        public float WidthDpi { get; private set; }
         /// <summary>
         /// 画像高さ
         /// </summary>
@@ -52,25 +52,17 @@ namespace MainModel
         /// 画像幅
         /// </summary>
         public float ActualImageWidth { get; private set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        private readonly ILoadImager _LoadImage;
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //private readonly ILoadImager _LoadImage;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="service"></param>
-        public ScaleAdjuster(IUnityContainer service)
+        public ScaleAdjuster()
         {
-            _LoadImage = service.Resolve<ILoadImager>();
-            _LoadImage.CmpLoadImage += (s, e) =>
-            {
-                if (s is LoadImager li)
-                {
-                    ImageHeight = (float)li.DispImage.Height;
-                    ImageWidth = (float)li.DispImage.Width;
-                }
-            };
+
         }
         /// <summary>
         /// 初期倍率の計算
@@ -78,19 +70,24 @@ namespace MainModel
         /// <param name="RealWidth"></param>
         /// <param name="RealHeight"></param>
         public void DoCaleInitScale(float initScrollActualWidth,
-                                    float initScrollActualHeight)
+                                    float initScrollActualHeight,
+                                    float dpi_width,
+                                    float dpi_height)
         {
+            WidthDpi = dpi_width;
+            HeightDpi = dpi_height;
+
             ActualImageHeight = initScrollActualHeight;
             ActualImageWidth = initScrollActualWidth;
             List<float> vals = new List<float>()
                     {
                         initScrollActualWidth,
                         initScrollActualHeight,
-                        ImageWidth,
-                        ImageHeight
+                        WidthDpi,
+                        HeightDpi
                     };
 
-            float canvmax = Math.Max(ImageHeight, ImageWidth);
+            float canvmax = Math.Max(HeightDpi, WidthDpi);
             
             float scrolmax = Math.Max(initScrollActualHeight, initScrollActualWidth);
             
@@ -98,8 +95,8 @@ namespace MainModel
 
             if (canvmax > scrolmax)
             {//画像大きい
-                var wrate = initScrollActualWidth / ImageWidth;
-                var hrate = initScrollActualHeight / ImageHeight;
+                var wrate = initScrollActualWidth / WidthDpi;
+                var hrate = initScrollActualHeight / HeightDpi;
 
                 if(wrate<hrate)
                 {
@@ -117,7 +114,7 @@ namespace MainModel
 
             MinValue = ZoomRate;
 
-            CmpInitZoomRateImage?.Invoke(this, new EventArgs());
+            ChangeZoomRate?.Invoke(this, new EventArgs());
         }
         /// <summary>
         /// 
@@ -149,7 +146,7 @@ namespace MainModel
         /// <summary>
         /// 
         /// </summary>
-        void DoCaleInitScale(float scrollwidth, float scrollheight);
+        void DoCaleInitScale(float scrollwidth, float scrollheight, float pixelwidth, float pixelheight);
         /// <summary>
         /// 
         /// </summary>

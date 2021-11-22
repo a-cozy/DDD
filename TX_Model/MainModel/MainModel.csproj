@@ -86,6 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitmapService.cs" />
+    <Compile Include="ImageArrayToBitmap.cs" />
+    <Compile Include="ImageCollector.cs" />
+    <Compile Include="ImageScaleControlor.cs" />
+    <Compile Include="ImageWLWWControlor.cs" />
     <Compile Include="Point2Center.cs" />
     <Compile Include="ImageCoodinate.cs" />
     <Compile Include="InitModel.cs" />

@@ -66,8 +66,5 @@ namespace DispImage
                                                 var dddd = Math.Round(data.ScaleNum, 2).ToString("0.00");
                                                 data.ScaleNum = float.Parse(dddd);
                                             }));
-
-
-
     }
 }

@@ -39,9 +39,12 @@ namespace MenuBar.ViewModels
         /// </summary>
         private readonly IMainSomething _MainSomething;
         /// <summary>
-        /// 画像ロードクラス I/F
+        /// 画像コレクタ I/F
         /// </summary>
         private readonly ILoadImager _LoadImage;
+        /// 画像コレクタ I/F
+        /// </summary>
+        private readonly IImageCollector _ImageCollector;
         /// <summary>
         /// コモンダイアログ表示サービスを表します。
         /// </summary>
@@ -56,7 +59,9 @@ namespace MenuBar.ViewModels
         /// <param name="service"></param>
         public MenuBarViewModel(IUnityContainer service)
         {
+
             _LoadImage = service.Resolve<ILoadImager>();
+            _ImageCollector = service.Resolve<IImageCollector>();
             _ComDialogService = service.Resolve<ICommonDialogService>();
             _MainSomething = service.Resolve<IMainSomething>();
 
@@ -73,7 +78,12 @@ namespace MenuBar.ViewModels
 
                     if (_ComDialogService.ShowDialog(settings) && !string.IsNullOrEmpty(settings.FileName))
                     {
-                        _LoadImage.OpenFile(settings.FileName);
+                        if(_ImageCollector.QueryData(settings.FileName))
+                        {
+                            _LoadImage.OpenFile(settings.FileName);
+                        }
+                        //_LoadData.DoLoadData(settings.FileName);
+
                     }
                     else
                     {
@@ -84,7 +94,7 @@ namespace MenuBar.ViewModels
 
             ClearCmd = new DelegateCommand(() => 
             {
-                _LoadImage.DoClear();
+                //_LoadImage.DoClear();
             });
 
             _PrismDialogService = service.Resolve<IDialogService>();

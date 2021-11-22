@@ -66,16 +66,16 @@ namespace MainModel
             {
                 if(s is ScaleAdjuster sa)
                 {
-                    CurrentX = (float)Math.Round(sa.ImageWidth / 2F, 0, MidpointRounding.AwayFromZero);
-                    CurrentY = (float)Math.Round(sa.ImageHeight / 2F, 0, MidpointRounding.AwayFromZero);
+                    //CurrentX = (float)Math.Round(sa. / 2F, 0, MidpointRounding.AwayFromZero);
+                    //CurrentY = (float)Math.Round(sa.PixelWidth / 2F, 0, MidpointRounding.AwayFromZero);
                 }
             };
             _Scale.ChangeZoomRate += (s, e) =>
             {
                 if (s is ScaleAdjuster sa)
                 {
-                    CurrentX = (float)Math.Round(sa.ImageWidth / 2F, 0, MidpointRounding.AwayFromZero);
-                    CurrentY = (float)Math.Round(sa.ImageHeight / 2F, 0, MidpointRounding.AwayFromZero);
+                    //CurrentX = (float)Math.Round(sa.PixelWidth / 2F, 0, MidpointRounding.AwayFromZero);
+                    //CurrentY = (float)Math.Round(sa.PixelWidth / 2F, 0, MidpointRounding.AwayFromZero);
                 }
             };
         }

@@ -35,9 +35,18 @@ namespace DispImage
         public static readonly DependencyProperty ImageFileNameProperty =
             DependencyProperty.Register("ImageFileName", typeof(string), typeof(UC_NumSlider), new PropertyMetadata(null));
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Btn1のCommand
+        /// </summary>
+        public ICommand Btn1
         {
-
+            get { return (ICommand)GetValue(Btn1Property); }
+            set { SetValue(Btn1Property, value); }
         }
+
+        // Using a DependencyProperty as the backing store for Btn1.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty Btn1Property =
+            DependencyProperty.Register("Btn1", typeof(ICommand), typeof(UC_NumSlider), new PropertyMetadata(null));
+
     }
 }

@@ -3,39 +3,57 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DispImage.Views">
-
-        <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>-->
-        <!--<Border Grid.Row="0" BorderBrush="Magenta" BorderThickness="1">
-            <ScrollViewer x:Name="scrollviewer"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+             xmlns:prism="http://prismlibrary.com/" 
+             xmlns:uclocal="clr-namespace:DispImage"
+             xmlns:local="clr-namespace:DispImage.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300"
+             d:DesignWidth="300">
+    <Grid>
+        <ScrollViewer x:Name="scrollviewer"
                       HorizontalScrollBarVisibility="Auto" 
                       VerticalScrollBarVisibility="Auto" 
                       >
-                <Canvas x:Name="canvas" 
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="ScrollChanged">
+                    <i:InvokeCommandAction Command="{Binding ScrollChanged}"
+                                           CommandParameter="{Binding ElementName=scrollviewer}">
+                    </i:InvokeCommandAction>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding ImageLoaded}"
+                                           CommandParameter="{Binding ElementName=scrollviewer}">
+                    </i:InvokeCommandAction>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <Canvas x:Name="canvas" 
                     Width ="{Binding ActualWidth, ElementName=image}" 
                     Height="{Binding ActualHeight, ElementName=image}"
                     RenderOptions.EdgeMode="Aliased"
                     RenderOptions.BitmapScalingMode="NearestNeighbor"
                     >
-                    <Canvas.LayoutTransform>
-                        <ScaleTransform x:Name="scaleTransform"
+                <Canvas.LayoutTransform>
+                    <ScaleTransform x:Name="scaleTransform"
                             ScaleX="{Binding ZoomScale}" 
                             ScaleY="{Binding ZoomScale}" />
-                    </Canvas.LayoutTransform>
-                    <Image x:Name="image" 
+                </Canvas.LayoutTransform>
+                <Image x:Name="image" 
                        Source="{Binding ImageSource}"
                        Stretch ="UniformToFill"
                        RenderOptions.BitmapScalingMode="NearestNeighbor"
                        RenderOptions.EdgeMode="Unspecified"/>
-                </Canvas>
-            </ScrollViewer>
-        </Border>-->
-        <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Border Grid.Column="0" BorderBrush="LightBlue" BorderThickness="1">
-                <TextBlock Text="DispImage" Margin="4,4,4,4" Foreground="Red"/>
-            </Border>
-        </DockPanel>
+            </Canvas>
+        </ScrollViewer>
+        <StackPanel Orientation="Vertical" Margin="8" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <uclocal:UC_NumSlider 
+                Btn1="{Binding FittingCmd}"
+                ImageFileName="{Binding Title}"/>
+            <uclocal:UC_ZoomSlider 
+                MaxValueSlider="{Binding MaxSlider}"
+                MinValueSlider="{Binding MinSlider}"
+                ScaleNum="{Binding ZoomScale, Mode=TwoWay}"
+                />
+        </StackPanel>
+    </Grid>
 </UserControl>

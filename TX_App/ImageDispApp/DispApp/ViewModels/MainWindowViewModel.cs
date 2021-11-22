@@ -1,4 +1,5 @@
-﻿using MainModel;
+﻿using DispImage;
+using MainModel;
 using MenuBar;
 using Prism.Ioc;
 using Prism.Mvvm;
@@ -38,7 +39,7 @@ namespace DispApp.ViewModels
 
         private readonly IRegionManager _RegionManager;
 
-        private readonly ILoadImager _LoadImager;
+        //private readonly IImageCollector _ImageCollector;
 
         private readonly IContainerExtension _ContainerExtension;
 
@@ -56,12 +57,10 @@ namespace DispApp.ViewModels
             _RegionManager.RegisterViewWithRegion(
                 nameof(MenuBarModule), typeof(MenuBar.Views.MenuBarView));
 
-            _LoadImager = service.Resolve<ILoadImager>();
-            _LoadImager.CmpLoadImage += (s, e) =>
-            {
-                AddModule<DispImage.Views.DispImage>("DispImageModule");
-                //Task.Run(() => AddModule<DispImage.Views.DispImage>("DispImageModule"));
-            };
+            _RegionManager.RegisterViewWithRegion(
+                nameof(DispImage.DispImageModule), typeof(DispImage.Views.DispImage));
+
+
         }
         private void AddModule<T>(string resionName) where T : UserControl
         {

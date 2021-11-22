@@ -44,6 +44,12 @@ namespace DispApp
 
             containerRegistry.RegisterSingleton<IImageCoodinate, ImageCoodinate>();
 
+            containerRegistry.RegisterSingleton<IImageCollector, ImageCollector>();
+
+            containerRegistry.RegisterSingleton<IImageArrayToBitmap, ImageArrayToBitmap>();
+
+            containerRegistry.RegisterSingleton<IImageWLWWControlor, ImageWLWWControlor>();
+
             containerRegistry.RegisterInstance(this.Container);
         }
 

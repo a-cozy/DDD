@@ -12,8 +12,10 @@
         <Border Grid.Column="0" BorderBrush="Cyan" BorderThickness="1">
             <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Button Content="実行" 
+                        Command ="{Binding Btn1,
+                           RelativeSource={RelativeSource FindAncestor, 
+                           AncestorType={x:Type local:UC_NumSlider}}}"
                         Background="LightGray"
-                        Click="Button_Click"
                         Margin ="8">
                 </Button>
             </StackPanel>
@@ -21,7 +23,8 @@
         <Border Grid.Column="1" BorderBrush="LimeGreen" BorderThickness="1">
             <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock Text="{Binding ImageFileName,
-                           RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:UC_NumSlider}}}"
+                           RelativeSource={RelativeSource FindAncestor, 
+                           AncestorType={x:Type local:UC_NumSlider}}}"
                            Margin ="8"
                            Foreground="Aqua"/>
             </StackPanel>

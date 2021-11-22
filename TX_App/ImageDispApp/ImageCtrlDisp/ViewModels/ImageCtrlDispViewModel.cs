@@ -24,18 +24,18 @@ namespace ImageCtrlDisp.ViewModels
             _RegionManager.RegisterViewWithRegion(
                 nameof(DispImageWindowModule), typeof(DispImageWindow.Views.DispImageWindow));
 
-            _LoadImager = service.Resolve<ILoadImager>();
-            _LoadImager.ClearImage += (s, e) =>
-            {
-                var dd = _RegionManager.Regions.ToList().Find(
-                    p => p.Name == nameof(DispImageWindowModule));
+            //_LoadImager = service.Resolve<ILoadImager>();
+            //_LoadImager.ClearImage += (s, e) =>
+            //{
+            //    var dd = _RegionManager.Regions.ToList().Find(
+            //        p => p.Name == nameof(DispImageWindowModule));
 
-                dd.RemoveAll();
+            //    dd.RemoveAll();
 
-                _RegionManager.RegisterViewWithRegion(
-                    nameof(DispImageWindowModule), typeof(DispImageWindow.Views.DispImageWindow));
+            //    _RegionManager.RegisterViewWithRegion(
+            //        nameof(DispImageWindowModule), typeof(DispImageWindow.Views.DispImageWindow));
 
-            };
+            //};
         }
     }
 }

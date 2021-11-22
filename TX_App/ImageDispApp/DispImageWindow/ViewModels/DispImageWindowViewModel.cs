@@ -141,30 +141,30 @@ namespace DispImageWindow.ViewModels
             _ImageSource = new BitmapImage();
             LineThickness = 1;
 
-            _LoadImage = service.Resolve<ILoadImager>();
-            _LoadImage.CmpLoadImage += (s, e) =>
-            {
-                if (s is LoadImager li)
-                {
-                    _IsOpenProc = true;
-                    ZoomRate = 1;
-                    ImageSource = li.DispImage;
-                }
-            };
-            _LoadImage.ClearImage += (s, e) =>
-            {
-                if (s is LoadImager li)
-                {
-                    _IsOpenProc = true;
-                    ZoomRate = 0.1F;
-                    ImageSource = li.NullImage;
+            //_LoadImage = service.Resolve<ILoadImager>();
+            //_LoadImage.CmpLoadImage += (s, e) =>
+            //{
+            //    if (s is LoadImager li)
+            //    {
+            //        _IsOpenProc = true;
+            //        ZoomRate = 1;
+            //        //ImageSource = li.DispImage;
+            //    }
+            //};
+            //_LoadImage.ClearImage += (s, e) =>
+            //{
+            //    if (s is LoadImager li)
+            //    {
+            //        _IsOpenProc = true;
+            //        ZoomRate = 0.1F;
+            //        //ImageSource = li.NullImage;
 
-                   // Task.WaitAll(Task.Delay(1000));
-                }
+            //       // Task.WaitAll(Task.Delay(1000));
+            //    }
 
-                _EventAggregator.GetEvent<PubSubEvent<object>>().Publish("");
+            //    _EventAggregator.GetEvent<PubSubEvent<object>>().Publish("");
 
-            };
+            //};
 
 
             _Adjuter = service.Resolve<IScaleAdjuster>();
@@ -213,14 +213,14 @@ namespace DispImageWindow.ViewModels
                 if (_IsOpenProc && d is ScrollViewer sv)
                 {
                     //Debug.WriteLine();
-                    var width = sv.ActualWidth;// + sv.DesiredSize.Width;
-                    var height = sv.ActualHeight;// + sv.DesiredSize.Height;
-                    _Adjuter.DoCaleInitScale((float)width, (float)height);
-                    _IsOpenProc = false;
+                    //var width = sv.ActualWidth;// + sv.DesiredSize.Width;
+                    //var height = sv.ActualHeight;// + sv.DesiredSize.Height;
+                    //_Adjuter.DoCaleInitScale((float)width, (float)height);
+                    //_IsOpenProc = false;
                 }
             });
 
-            _LoadImage.RequestImage();
+            //_LoadImage.RequestImage();
         }
 
         public void Destroy()

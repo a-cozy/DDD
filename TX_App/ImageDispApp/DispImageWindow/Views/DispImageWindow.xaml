@@ -54,10 +54,10 @@
                       VerticalScrollBarVisibility="Auto" 
                       >
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="ScrollChanged">
-                        <prism:InvokeCommandAction Command="{Binding ScrollChanged}" 
-                                               CommandParameter="{Binding ElementName=scrollviewer}"
-                                               />
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding ScrollChanged}"
+                                               CommandParameter="{Binding ElementName=scrollviewer}">
+                        </i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <Canvas x:Name="canvas" 

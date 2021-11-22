@@ -38,16 +38,16 @@ namespace MainModel
         /// <param name="limage"></param>
         public Point2Center(ILoadImager limage)
         {
-            _LoadImage = limage;
-            _LoadImage.CmpLoadImage += (s, e) =>
-            {
-                var li = s as LoadImager;
-                DispHeight = li.DispImage.PixelHeight;
-                double y = DispHeight / 2;
-                DispWidth = li.DispImage.PixelWidth;
-                double x = DispWidth / 2;
-                CenterPoint = new Point(x, y);
-            };
+            //_LoadImage = limage;
+            //_LoadImage.CmpLoadImage += (s, e) =>
+            //{
+            //    //var li = s as LoadImager;
+            //    //DispHeight = li.DispImage.PixelHeight;
+            //    //double y = DispHeight / 2;
+            //    //DispWidth = li.DispImage.PixelWidth;
+            //    //double x = DispWidth / 2;
+            //    //CenterPoint = new Point(x, y);
+            //};
         }
         /// <summary>
         /// 

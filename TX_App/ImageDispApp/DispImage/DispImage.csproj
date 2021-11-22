@@ -68,6 +68,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\DispImageViewModel.cs" />
+    <Compile Include="ViewModels\UC_DispImageViewModel.cs" />
     <Compile Include="Views\DispImage.xaml.cs">
       <DependentUpon>DispImage.xaml</DependentUpon>
     </Compile>

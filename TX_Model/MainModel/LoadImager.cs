@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 //using System.Windows.Controls;
@@ -15,53 +16,32 @@ namespace MainModel
     public class LoadImager : ILoadImager, IDisposable
     {
         /// <summary>
-        /// 画像
+        /// 画像情報
         /// </summary>
-        public BitmapImage DispImage { get; private set; }
+        public ImageDispInf ImageDispInfs { get; private set; }
         /// <summary>
-        /// 画像
+        /// SHA256
         /// </summary>
-        public BitmapImage NullImage { get; private set; }
-        /// <summary>
-        /// パス
-        /// </summary>
-        public string ImgPath { get; private set; }
+        public string ID_SHA256 { get; private set; }
         /// <summary>
         /// 読込完了
         /// </summary>
         public event EventHandler EndLoadImage;
         /// <summary>
-        /// 読込完了
+        /// データ読込I/F
         /// </summary>
-        public event EventHandler CmpLoadImage;
-        /// <summary>
-        /// 読込クリア
-        /// </summary>
-        public event EventHandler ClearImage;
+        private readonly ILoadData _LoadData;
         /// <summary>
         /// 画像読み込みクラス
         /// </summary>
-        public LoadImager(IInitModel init)
+        public LoadImager(ILoadData loaddata)
         {
-            int max = ushort.MaxValue;
-
-            int min = ushort.MinValue;
-
-            int imgw = max - min;
-
-            int imgb = imgw / 2;
-
-            int width = 10;
-            int height = 10;
-            ushort[] data = new ushort[width * height];
-
-            byte[] bdata = Service.MakeByteData(width, height, 16, data);
-
-            uint[] lut = Service.UpdateLut(16, imgb, imgw, 1F);
-
-            Bitmap bmp = Service.Convert(bdata, width, height, 16, lut);
-
-            NullImage = Service.Bitmap2BitmapImage(bmp);
+            _LoadData = loaddata;
+            _LoadData.EndLoadData += (s, e) => 
+            {
+                ID_SHA256 = (s as LoadData).ID_SHA256;
+                PathToBitmapImage((s as LoadData).FileFullPath);
+            };
         }
         /// <summary>
         /// ファイル開
@@ -69,93 +49,99 @@ namespace MainModel
         /// <param name="path"></param>
         public void OpenFile(string path)
         {
-            if(!string.IsNullOrEmpty(ImgPath))
-            {
-                ClearImage?.Invoke(this, new EventArgs());
-            }
-
             if (File.Exists(path))
             {
-                //_InitModel.SetDir(path);
-                NewMethod1(path);
-                CmpLoadImage?.Invoke(this, new EventArgs());
-                //占有しないパターン-2
-                //NewMethod(path);
+                _LoadData.DoLoadData(path);
             }
+            else
+            {
+                throw new Exception($"{path} isn't exist!");
+            }
+        }
+        /// <summary>
+        /// pathからbitmapImageに変更
+        /// </summary>
+        /// <param name="path"></param>
+        void PathToBitmapImage(string path)
+        {
+            _ = Service.ConvertBitmapToGrayScale(new Bitmap(path), out ushort[] data, out int width, out int height);
+
+            ImageDispInfs = new ImageDispInf
+            {
+                ID_sha256 = ID_SHA256,
+                ImgPath = path,
+                ImgArray = data,
+                Width  = width,
+                Height = height,
+                MaxValue = data.Max(),
+                MinValue = data.Min(),
+            };
 
             EndLoadImage?.Invoke(this, new EventArgs());
         }
-
-            void NewMethod1(string path)
-            {
-                ImgPath = path;
-
-                _ = Service.ConvertBitmapToGrayScale(new Bitmap(path), out ushort[] data, out int width, out int height);
-
-                int max = data.Max();
-
-                int min = data.Min();
-
-                int imgw = max - min;
-
-                int imgb = imgw / 2;
-
-                byte[] bdata = Service.MakeByteData(width, height, 16, data);
-
-                uint[] lut = Service.UpdateLut(16, imgb, imgw, 1F);
-
-                Bitmap bmp = Service.Convert(bdata, width, height, 16, lut);
-
-                DispImage = Service.Bitmap2BitmapImage(bmp);
-
-
-            }
-        
-
-        private void NewMethod(string path)
-        {
-            BitmapImage bmpImage = new BitmapImage();
-            FileStream stream = File.OpenRead(path);
-            bmpImage.BeginInit();
-            bmpImage.CacheOption = BitmapCacheOption.OnLoad;
-            bmpImage.StreamSource = stream;
-            bmpImage.EndInit();
-            stream.Close();
-            DispImage = bmpImage;
-        }
-
         /// <summary>
-        /// 要求
+        /// 破棄
         /// </summary>
-        public void RequestImage()
-        {
-            //_InitModel?.Request();
-        }
-        public void DoClear() 
-        {
-            if (!string.IsNullOrEmpty(ImgPath))
-            {
-                ImgPath = null;
-                ClearImage?.Invoke(this, new EventArgs());
-            }
-        }
-
         public void Dispose()
         {
             Debug.WriteLine("破棄");
         }
     }
-
-    public interface ILoadImager
+    /// <summary>
+    /// 画像表示情報
+    /// </summary>
+    public class ImageDispInf
     {
         /// <summary>
-        /// 読込クリア
+        /// ID
         /// </summary>
-        event EventHandler ClearImage;
+        public string ID_sha256 { get; set; }
         /// <summary>
-        /// 読込中
+        /// 画像
         /// </summary>
-        event EventHandler CmpLoadImage;
+        public BitmapImage DispImage { get; set; }
+        /// <summary>
+        /// パス
+        /// </summary>
+        public string ImgPath { get; set; }
+        /// <summary>
+        /// 画像Array
+        /// </summary>
+        public ushort[] ImgArray { get; set; }
+        /// <summary>
+        /// LUT
+        /// </summary>
+        public uint[] LUT { get; set; }
+        /// <summary>
+        /// 幅
+        /// </summary>
+        public int Width { get; set; }
+        /// <summary>
+        /// 高
+        /// </summary>
+        public int Height { get; set; }
+        /// <summary>
+        /// 諧調　WL
+        /// </summary>
+        public int WL { get; set; }
+        /// <summary>
+        /// 諧調 WW
+        /// </summary>
+        public int WW { get; set; }
+        /// <summary>
+        /// 輝度最大値
+        /// </summary>
+        public int MaxValue { get; set; }
+        /// <summary>
+        /// 輝度最大値
+        /// </summary>
+        public int MinValue { get; set; }
+    }
+    /// <summary>
+    /// 画像ロード
+    /// </summary>
+    public interface ILoadImager
+    {
         /// <summary>
         /// 読込完了
         /// </summary>
@@ -165,11 +151,5 @@ namespace MainModel
         /// </summary>
         /// <param name="path"></param>
         void OpenFile(string path);
-
-        void DoClear();
-        /// <summary>
-        /// 要求
-        /// </summary>
-        void RequestImage();
     }
 }

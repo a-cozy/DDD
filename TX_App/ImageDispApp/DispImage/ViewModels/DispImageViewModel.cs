@@ -7,6 +7,7 @@ using Prism.Navigation;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -23,56 +24,31 @@ namespace DispImage.ViewModels
     public class DispImageViewModel : BindableBase,IDisposable
     {
         /// <summary>
-        /// 表示画像
+        /// UC_DispImageViewMode
         /// </summary>
-        private BitmapImage _ImageSource;
-        public BitmapImage ImageSource
+        private ObservableCollection<UC_DispImageViewModel> _UC_DispImage;
+        public ObservableCollection<UC_DispImageViewModel> UC_DispImage
         {
-            get { return _ImageSource; }
-            set { SetProperty(ref _ImageSource, value); }
+            get { return _UC_DispImage; }
+            set { SetProperty(ref _UC_DispImage, value); }
         }
         /// <summary>
-        /// タイトル
+        /// 選択タブのIdx
         /// </summary>
-        private string _Title;
-        /// <summary>
-        /// タイトル
-        /// </summary>
-        public string Title
+        private int _SelTabIdx;
+        public int SelTabIdx
         {
-            get { return _Title; }
-            set { SetProperty(ref _Title, value); }
+            get { return _SelTabIdx; }
+            set { SetProperty(ref _SelTabIdx, value); }
         }
         /// <summary>
-        /// Zoomレート
+        /// 
         /// </summary>
-        private float _ZoomScale;
-        public float ZoomScale
-        {
-            get { return _ZoomScale; }
-            set { SetProperty(ref _ZoomScale, value); }
-        }
-        /// <summary>
-        /// 最大Zoomレート
-        /// </summary>
-        private float _MaxSlider;
-        public float MaxSlider
-        {
-            get { return _MaxSlider; }
-            set { SetProperty(ref _MaxSlider, value); }
-        }
-        /// <summary>
-        /// 最大Zoomレート
-        /// </summary>
-        private float _MinSlider;
-        public float MinSlider
-        {
-            get { return _MinSlider; }
-            set { SetProperty(ref _MinSlider, value); }
-        }
         private readonly IRegionManager _RegionManager;
-
-        private readonly ILoadImager _LoadImage;
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly IImageCollector _ImageCollection;
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -81,24 +57,19 @@ namespace DispImage.ViewModels
         {
             _RegionManager = service.Resolve<IRegionManager>();
 
-            MaxSlider = 4;
-            ZoomScale = 2;
+            UC_DispImage = new ObservableCollection<UC_DispImageViewModel>();
 
-            _ImageSource = new BitmapImage();
-
-            _LoadImage = service.Resolve<ILoadImager>();
-            _LoadImage.EndLoadImage += (s, e) =>
+            _ImageCollection = service.Resolve<IImageCollector>();
+            _ImageCollection.ChangedImageCollection += (s, e) =>
             {
-                Debug.WriteLine($"{nameof(DispImage)} ViewModel imageloaded");
-                ImageSource = (s as LoadImager).DispImage;
-                Title = Path.GetFileName((s as LoadImager).ImgPath);
-                Debug.WriteLine($"{Title}");
-            };
-
-            _LoadImage.ClearImage += (s, e) => 
-            {
-                Debug.WriteLine($"{nameof(DispImage)} ViewModel Cleared");
-                RemoveModule<DispImage.Views.DispImage>("DispImageModule");
+                UC_DispImageViewModel tmp = new UC_DispImageViewModel(service);
+                tmp.Closed += (_s,_e) =>
+                {
+                    UC_DispImage.Remove(_s as UC_DispImageViewModel);
+                    SelTabIdx = UC_DispImage.Count() - 1;
+                };
+                UC_DispImage.Add(tmp);
+                SelTabIdx = UC_DispImage.Count() - 1;
             };
         }
         /// <summary>
