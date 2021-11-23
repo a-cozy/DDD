@@ -136,6 +136,14 @@ namespace MainModel
         /// 輝度最大値
         /// </summary>
         public int MinValue { get; set; }
+        /// <summary>
+        /// 実際の表示サイズ
+        /// </summary>
+        public double ActualSize_Width { get; set; }
+        /// <summary>
+        /// 実際の表示サイズ
+        /// </summary>
+        public double ActualSize_Height { get; set; }
     }
     /// <summary>
     /// 画像ロード
