@@ -139,11 +139,27 @@ namespace MainModel
         /// <summary>
         /// 実際の表示サイズ
         /// </summary>
-        public double ActualSize_Width { get; set; }
+        public float ActualSize_Width { get; set; }
         /// <summary>
         /// 実際の表示サイズ
         /// </summary>
-        public double ActualSize_Height { get; set; }
+        public float ActualSize_Height { get; set; }
+        /// <summary>
+        /// 現在の表示スケールサイズ
+        /// </summary>
+        public float CurrentDispScale { get; set; }
+        /// <summary>
+        /// 最小の表示スケールサイズ
+        /// </summary>
+        public float MinDispScale { get; set; }
+        /// <summary>
+        /// 最大の表示スケールサイズ
+        /// </summary>
+        public float MaxDispScale { get; set; }
+        /// <summary>
+        /// スケールを設定したか？
+        /// </summary>
+        public bool IsSetRangeScalse { get; set; }
     }
     /// <summary>
     /// 画像ロード

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Prism.Events;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,16 @@ namespace DispImage
         public UC_DispImage()
         {
             InitializeComponent();
+
+            //agr.GetEvent<PubSubEvent<object>>().Subscribe((obj) =>
+            //{
+            //    UpdateLayout();
+            //});
         }
+
+        //private void scrollviewer_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        //{
+        //    Debug.WriteLine("scrollviewer_DataContextChanged");
+        //}
     }
 }

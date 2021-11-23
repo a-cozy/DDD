@@ -23,6 +23,18 @@ namespace DispImage.ViewModels
     public class UC_DispImageViewModel : BindableBase, IUC_DispImageViewModel, IDisposable
     {
         /// <summary>
+        /// タイトル
+        /// </summary>
+        private bool _IsSetMinScale;
+        /// <summary>
+        /// タイトル
+        /// </summary>
+        public bool IsSetMinScale
+        {
+            get { return _IsSetMinScale; }
+            set { SetProperty(ref _IsSetMinScale, value); }
+        }
+        /// <summary>
         /// Load Event
         /// </summary>
         public ICommand ScrollChanged { get; private set; }
@@ -30,10 +42,6 @@ namespace DispImage.ViewModels
         ///// Load Event
         ///// </summary>
         public ICommand ImageLoaded { get; private set; }
-        /// <summary>
-        /// 画像開く処理完了？
-        /// </summary>
-        private bool _IsCreating = false;
         /// <summary>
         /// 表示画像
         /// </summary>
@@ -101,14 +109,13 @@ namespace DispImage.ViewModels
         /// <summary>
         /// 画像倍率調整I/F
         /// </summary>
-        private readonly IScaleAdjuster _Adjuter;
+        private readonly IImageScaleControlor _Adjuter;
         /// <summary>
         /// 画像表示ユーザーコントロール
         /// </summary>
         public UC_DispImageViewModel(IUnityContainer service)
         {
-            //_EventAggregator = service.Resolve<IEventAggregator>();
-
+            
             MaxSlider = 4;
             ZoomScale = 2;
 
@@ -116,54 +123,35 @@ namespace DispImage.ViewModels
             _ImageArrayToBitmap = service.Resolve<IImageArrayToBitmap>();
             _ImageArrayToBitmap.RequestBitmap += (s, e) =>
             {
-                try
+                if (Title == null)
                 {
-                    _IsCreating = true;
-                    if (Title == null)
-                    {
-                        Debug.WriteLine($"{nameof(DispImage)} ViewModel imageloaded");
-                        Title = Path.GetFileName((s as ImageArrayToBitmap).ImageDispInf.ImgPath);
-                        ImageSource = (s as ImageArrayToBitmap).ImageDispInf.DispImage;
-                    }
-                }
-                finally
-                {
-                    _IsCreating = false;
+                    Title = Path.GetFileName((s as ImageArrayToBitmap).ImageDispInf.ImgPath);
+                    ImageSource = (s as ImageArrayToBitmap).ImageDispInf.DispImage;
+                    Debug.WriteLine($"{nameof(DispImage)}の{Title} ViewModel imageloaded");
                 }
             };
 
-            //ScrollChanged = new ActionCommand((d) =>
-            //{
-            //    if (_IsCreating)
-            //    {
-            //        _Adjuter.DoCaleInitScale(
-            //            (float)(d as ScrollViewer).ActualWidth,
-            //            (float)(d as ScrollViewer).ActualHeight,
-            //            (float)_ImageSource.Width,
-            //            (float)_ImageSource.Height);
-            //    }
-            //});
+            _Adjuter = service.Resolve<IImageScaleControlor>();
 
+            FittingCmd = new ActionCommand((d) => 
+            {
+                Debug.WriteLine($"{Title} FittingCmd");
+            });
+
+            ScrollChanged = new ActionCommand((d) => 
+            {
+                if (!IsSetMinScale)
+                    SetMinScaleMethod(d);
+            });
             ImageLoaded = new ActionCommand((d) =>
             {
-
+                if (!IsSetMinScale)
+                    SetMinScaleMethod(d);
             });
-
-            FittingCmd = new DelegateCommand(() => 
-            {
-                Debug.WriteLine("FittingCmd");
-            });
-
-            _Adjuter = service.Resolve<IScaleAdjuster>();
-            _Adjuter.ChangeZoomRate += (s, e) =>
-            {
-                var sa = s as ScaleAdjuster;
-                ZoomScale = sa.ZoomRate;
-            };
 
             ClearCmd = new DelegateCommand(() =>
             {
-                Debug.WriteLine("Closeed");
+                Debug.WriteLine($"{Title} is Closeed");
                 Dispose();
                 GC.SuppressFinalize(this);
                 Closed.Invoke(this, new EventArgs());
@@ -171,6 +159,30 @@ namespace DispImage.ViewModels
 
             _ImageArrayToBitmap.Request();
         }
+        /// <summary>
+        /// 最小設定値を設定
+        /// </summary>
+        /// <param name="d"></param>
+        private void SetMinScaleMethod(object d)
+        {
+            //Debug.WriteLine($"{Title}の最小設定値を設定");
+            _Adjuter.EndSetActualSize += (s, e) =>
+            {
+                Debug.WriteLine($"{Title}の最小設定値を設定");
+                ZoomScale = (s as ImageScaleControlor).CurrentScale;
+                MinSlider = (s as ImageScaleControlor).MinScale;
+                MaxSlider = (s as ImageScaleControlor).MaxScale;
+            };
+
+            _Adjuter.SetActualSize(
+                (float)(d as ScrollViewer).ActualWidth,
+                (float)(d as ScrollViewer).ActualHeight,
+                    ImageSource
+                );
+
+            IsSetMinScale = true;
+        }
+
         /// <summary>
         /// 破棄
         /// </summary>

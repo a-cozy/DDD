@@ -50,6 +50,9 @@ namespace DispApp
 
             containerRegistry.RegisterSingleton<IImageWLWWControlor, ImageWLWWControlor>();
 
+            containerRegistry.RegisterSingleton<IImageScaleControlor, ImageScaleControlor>();
+            
+
             containerRegistry.RegisterInstance(this.Container);
         }
 

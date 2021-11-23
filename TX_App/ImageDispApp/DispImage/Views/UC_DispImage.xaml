@@ -9,7 +9,9 @@
              xmlns:local="clr-namespace:DispImage.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300"
-             d:DesignWidth="300">
+             d:DesignWidth="300"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             >
     <Grid>
         <ScrollViewer x:Name="scrollviewer"
                       HorizontalScrollBarVisibility="Auto" 
