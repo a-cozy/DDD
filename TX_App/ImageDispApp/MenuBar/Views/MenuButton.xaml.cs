@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ImageControler.Views
+namespace MenuBar.Views
 {
     /// <summary>
-    /// Interaction logic for ViewA.xaml
+    /// MenuButton.xaml の相互作用ロジック
     /// </summary>
-    public partial class ChangeScaler : UserControl
+    public partial class MenuButton : UserControl
     {
-        public ChangeScaler()
+        public MenuButton()
         {
             InitializeComponent();
         }

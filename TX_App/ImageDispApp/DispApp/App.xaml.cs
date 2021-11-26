@@ -2,7 +2,7 @@
 using DispApp.Views;
 using DispImage;
 using DispImageWindow;
-using ImageControler;
+//using ImageControler;
 using ImageCtrlDisp;
 using MainModel;
 using MenuBar;
@@ -38,7 +38,6 @@ namespace DispApp
             
             containerRegistry.RegisterSingleton<IScaleAdjuster, ScaleAdjuster>();
             
-            containerRegistry.RegisterSingleton<IMainSomething, MainSomething>();
             
             containerRegistry.RegisterSingleton<IViewChangeHelper, ViewChangeHelper>();
 
@@ -51,7 +50,8 @@ namespace DispApp
             containerRegistry.RegisterSingleton<IImageWLWWControlor, ImageWLWWControlor>();
 
             containerRegistry.RegisterSingleton<IImageScaleControlor, ImageScaleControlor>();
-            
+
+            containerRegistry.RegisterSingleton<IImageDisplay, ImageDisplay>();
 
             containerRegistry.RegisterInstance(this.Container);
         }

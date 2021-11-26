@@ -37,7 +37,7 @@ namespace MenuBar.ViewModels
         /// <summary>
         /// メインサポートクラスI/F
         /// </summary>
-        private readonly IMainSomething _MainSomething;
+        //private readonly IMainSomething _MainSomething;
         /// <summary>
         /// 画像コレクタ I/F
         /// </summary>
@@ -63,12 +63,12 @@ namespace MenuBar.ViewModels
             _LoadImage = service.Resolve<ILoadImager>();
             _ImageCollector = service.Resolve<IImageCollector>();
             _ComDialogService = service.Resolve<ICommonDialogService>();
-            _MainSomething = service.Resolve<IMainSomething>();
+            //_MainSomething = service.Resolve<IMainSomething>();
 
-            ExitApp = new DelegateCommand(()=>
-            {
-                _MainSomething.ExitCmd();
-            });
+            //ExitApp = new DelegateCommand(()=>
+            //{
+            //    _MainSomething.ExitCmd();
+            //});
 
             OpenCmd = new DelegateCommand(() =>
             {
@@ -82,8 +82,10 @@ namespace MenuBar.ViewModels
                         {
                             _LoadImage.OpenFile(settings.FileName);
                         }
-                        //_LoadData.DoLoadData(settings.FileName);
+                        else 
+                        {
 
+                        }
                     }
                     else
                     {

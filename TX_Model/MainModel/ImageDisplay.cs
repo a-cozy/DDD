@@ -15,6 +15,10 @@ namespace MainModel
         /// 画像更新
         /// </summary>
         public event EventHandler ChangedImage;
+
+        public event EventHandler RequestRes;
+
+        public event EventHandler EndCalScale;
         /// <summary>
         /// 画像表示情報
         /// </summary>
@@ -46,14 +50,21 @@ namespace MainModel
                     ImageDispInf.MaxDispScale = tmpctrl.MaxScale;
                     ImageDispInf.MinDispScale = tmpctrl.MinScale;
                     ImageDispInf.CurrentDispScale = tmpctrl.CurrentScale;
+
+                    ImageDispInf.IsSetRangeScalse = true;
+
+                    EndCalScale?.Invoke(this, new EventArgs());
                 }
             };
             _ImageBitmap = imagebitmap;
             _ImageBitmap.EndConvertBitmap += (s, e) => 
             {
                 ImageDispInf = (s as ImageArrayToBitmap).ImageDispInf;
+                ChangedImage?.Invoke(this, new EventArgs());
             };
         }
+        public void DoRequest() => 
+            RequestRes?.Invoke(this, new EventArgs());
     }
     /// <summary>
     /// 画像表示
@@ -62,5 +73,9 @@ namespace MainModel
     {
         event EventHandler ChangedImage;
 
+        event EventHandler RequestRes;
+
+        event EventHandler EndCalScale;
+        void DoRequest();
     }
 }

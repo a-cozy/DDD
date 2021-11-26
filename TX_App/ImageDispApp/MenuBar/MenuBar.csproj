@@ -68,11 +68,15 @@
     </Compile>
     <Compile Include="ViewModels\AboutUsDialogViewModel.cs" />
     <Compile Include="ViewModels\MenuBarViewModel.cs" />
+    <Compile Include="ViewModels\MenuButtonViewModel.cs" />
     <Compile Include="Views\AboutUsDialog.xaml.cs">
       <DependentUpon>AboutUsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MenuBarView.xaml.cs">
       <DependentUpon>MenuBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuButton.xaml.cs">
+      <DependentUpon>MenuButton.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -100,6 +104,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MenuBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

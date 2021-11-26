@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity;
 
-namespace ImageControler.ViewModels
+namespace MenuShortCut.ViewModels
 {
-    public class ChangeScalerViewModel : BindableBase
+    public class MenuShortCutViewModel : BindableBase
     {
         ///// <summary>
         ///// スケール値
@@ -28,7 +28,7 @@ namespace ImageControler.ViewModels
                         return;
                     _ScaleNum = value;
                     RaisePropertyChanged();
-                    _Adjuter.SetZoomValue(float.Parse(_ScaleNum));
+                    //_Adjuter.SetZoomValue(float.Parse(_ScaleNum));
                 }
             }
         }
@@ -42,22 +42,22 @@ namespace ImageControler.ViewModels
         /// <summary>
         /// 画像倍率調整I/F
         /// </summary>
-        private readonly IScaleAdjuster _Adjuter;
+        //private readonly IScaleAdjuster _Adjuter;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="service"></param>
-        public ChangeScalerViewModel(IUnityContainer service)
+        public MenuShortCutViewModel(IUnityContainer service)
         {
-            _Adjuter = service.Resolve<IScaleAdjuster>();
-            _Adjuter.CmpInitZoomRateImage += (s, e) =>
-            {
-                if (s is ScaleAdjuster sa)
-                {
-                    ScaleNum = sa.ZoomRate.ToString("00.00");
-                    MinValue = sa.MinValue;
-                }
-            };
+            //_Adjuter = service.Resolve<IScaleAdjuster>();
+            //_Adjuter.CmpInitZoomRateImage += (s, e) =>
+            //{
+            //    if (s is ScaleAdjuster sa)
+            //    {
+            //        ScaleNum = sa.ZoomRate.ToString("00.00");
+            //        MinValue = sa.MinValue;
+            //    }
+            //};
             ScaleNum = "0.00";
         }
     }

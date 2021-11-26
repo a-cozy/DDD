@@ -10,7 +10,8 @@ namespace MenuBar
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            
+            //IRegionManager regionMan = containerProvider.Resolve<IRegionManager>();
+            //_ = regionMan.RegisterViewWithRegion(nameof(MenuBarModule), typeof(Views.MenuButton));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

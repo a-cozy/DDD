@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="MenuBar.Views.MenuButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MenuBar.Views"
+             mc:Ignorable="d"
+             xmlns:prism="http://prismlibrary.com/" 
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <StackPanel Orientation="Horizontal" Height="25">
+            <ToggleButton Content="{Binding ModeName}" IsChecked="{Binding IsChecked}" Width="200" Command="{Binding ChangedCommand}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

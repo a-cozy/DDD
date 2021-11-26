@@ -29,7 +29,7 @@ namespace MainModel
         /// <summary>
         /// 画像ロードクラス I/F
         /// </summary>
-        private readonly IImageArrayToBitmap _ImageInf;
+        private readonly IImageDisplay _ImageDisplay;
         /// <summary>
         /// データロードクラス I/F
         /// </summary>
@@ -37,7 +37,7 @@ namespace MainModel
         /// <summary>
         /// 
         /// </summary>
-        public ImageCollector(IImageArrayToBitmap li, ILoadData ld)
+        public ImageCollector(IImageDisplay lD, ILoadData ld)
         {
             _LoadData = ld;
             _LoadData.EndLoadData += (s, e) => 
@@ -45,12 +45,12 @@ namespace MainModel
                 SHA_256 = (s as LoadData).ID_SHA256;
             };
 
-            _ImageInf = li;
-            _ImageInf.EndConvertBitmap += (s, e) =>
+            _ImageDisplay = lD;
+            _ImageDisplay.ChangedImage += (s, e) =>
             {
                 if (CanAddCollection)
                 {
-                    DoAddImage((s as ImageArrayToBitmap).ImageDispInf);
+                    DoAddImage((s as ImageDisplay).ImageDispInf);
                     CanAddCollection = false;
                 }
             };

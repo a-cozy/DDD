@@ -47,15 +47,19 @@ namespace DispApp.ViewModels
         {
             _ContainerExtension = service.Resolve<IContainerExtension>();
 
-            _MainSomething = service.Resolve<IMainSomething>();
-            _MainSomething.ExitApp += (s, e) =>
-            {
-                Application.Current.MainWindow.Close();
-            };
+            //_MainSomething = service.Resolve<IMainSomething>();
+            //_MainSomething.ExitApp += (s, e) =>
+            //{
+            //    Application.Current.MainWindow.Close();
+            //};
 
             _RegionManager = service.Resolve<IRegionManager>();
+            
             _RegionManager.RegisterViewWithRegion(
                 nameof(MenuBarModule), typeof(MenuBar.Views.MenuBarView));
+
+            _RegionManager.RegisterViewWithRegion(
+                "MenuButtonModule", typeof(MenuBar.Views.MenuButton));
 
             _RegionManager.RegisterViewWithRegion(
                 nameof(DispImage.DispImageModule), typeof(DispImage.Views.DispImage));

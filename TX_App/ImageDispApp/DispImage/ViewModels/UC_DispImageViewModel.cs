@@ -105,7 +105,7 @@ namespace DispImage.ViewModels
         /// <summary>
         /// 画像bitmap変換I/F
         /// </summary>
-        private readonly IImageArrayToBitmap _ImageArrayToBitmap;
+        private readonly IImageDisplay _ImageDisplay;
         /// <summary>
         /// 画像倍率調整I/F
         /// </summary>
@@ -116,18 +116,25 @@ namespace DispImage.ViewModels
         public UC_DispImageViewModel(IUnityContainer service)
         {
             
-            MaxSlider = 4;
-            ZoomScale = 2;
-
             _ImageSource = new BitmapImage();
-            _ImageArrayToBitmap = service.Resolve<IImageArrayToBitmap>();
-            _ImageArrayToBitmap.RequestBitmap += (s, e) =>
+            _ImageDisplay = service.Resolve<IImageDisplay>();
+            _ImageDisplay.RequestRes += (s, e) =>
             {
                 if (Title == null)
                 {
-                    Title = Path.GetFileName((s as ImageArrayToBitmap).ImageDispInf.ImgPath);
-                    ImageSource = (s as ImageArrayToBitmap).ImageDispInf.DispImage;
+                    Title = Path.GetFileName((s as ImageDisplay).ImageDispInf.ImgPath);
+                    ImageSource = (s as ImageDisplay).ImageDispInf.DispImage;
                     Debug.WriteLine($"{nameof(DispImage)}の{Title} ViewModel imageloaded");
+                }
+            };
+            _ImageDisplay.EndCalScale += (s, e) => 
+            {
+                if(!IsSetMinScale)
+                {
+                    IsSetMinScale = (s as ImageDisplay).ImageDispInf.IsSetRangeScalse;
+                    MaxSlider = (s as ImageDisplay).ImageDispInf.MaxDispScale;
+                    MinSlider = (s as ImageDisplay).ImageDispInf.MinDispScale;
+                    ZoomScale = (s as ImageDisplay).ImageDispInf.CurrentDispScale;
                 }
             };
 
@@ -141,12 +148,24 @@ namespace DispImage.ViewModels
             ScrollChanged = new ActionCommand((d) => 
             {
                 if (!IsSetMinScale)
-                    SetMinScaleMethod(d);
+                {
+                    _Adjuter.SetActualSize(
+                            (float)(d as ScrollViewer).ActualWidth,
+                            (float)(d as ScrollViewer).ActualHeight,
+                            ImageSource
+                            );
+                }
             });
             ImageLoaded = new ActionCommand((d) =>
             {
                 if (!IsSetMinScale)
-                    SetMinScaleMethod(d);
+                {
+                    _Adjuter.SetActualSize(
+                             (float)(d as ScrollViewer).ActualWidth,
+                             (float)(d as ScrollViewer).ActualHeight,
+                                 ImageSource
+                             );
+                }
             });
 
             ClearCmd = new DelegateCommand(() =>
@@ -157,31 +176,31 @@ namespace DispImage.ViewModels
                 Closed.Invoke(this, new EventArgs());
             });
 
-            _ImageArrayToBitmap.Request();
+            _ImageDisplay.DoRequest();
         }
-        /// <summary>
-        /// 最小設定値を設定
-        /// </summary>
-        /// <param name="d"></param>
-        private void SetMinScaleMethod(object d)
-        {
-            //Debug.WriteLine($"{Title}の最小設定値を設定");
-            _Adjuter.EndSetActualSize += (s, e) =>
-            {
-                Debug.WriteLine($"{Title}の最小設定値を設定");
-                ZoomScale = (s as ImageScaleControlor).CurrentScale;
-                MinSlider = (s as ImageScaleControlor).MinScale;
-                MaxSlider = (s as ImageScaleControlor).MaxScale;
-            };
+        ///// <summary>
+        ///// 最小設定値を設定
+        ///// </summary>
+        ///// <param name="d"></param>
+        //private void SetMinScaleMethod(object d)
+        //{
+        //    //Debug.WriteLine($"{Title}の最小設定値を設定");
+        //    //_Adjuter.EndSetActualSize += (s, e) =>
+        //    //{
+        //    //    Debug.WriteLine($"{Title}の最小設定値を設定");
+        //    //    ZoomScale = (s as ImageScaleControlor).CurrentScale;
+        //    //    MinSlider = (s as ImageScaleControlor).MinScale;
+        //    //    MaxSlider = (s as ImageScaleControlor).MaxScale;
+        //    //};
 
-            _Adjuter.SetActualSize(
-                (float)(d as ScrollViewer).ActualWidth,
-                (float)(d as ScrollViewer).ActualHeight,
-                    ImageSource
-                );
+        //    _Adjuter.SetActualSize(
+        //        (float)(d as ScrollViewer).ActualWidth,
+        //        (float)(d as ScrollViewer).ActualHeight,
+        //            ImageSource
+        //        );
 
-            IsSetMinScale = true;
-        }
+        //    IsSetMinScale = true;
+        //}
 
         /// <summary>
         /// 破棄
