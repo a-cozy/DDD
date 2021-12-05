@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="DispImage.Views.UC_Panel_ModeB"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DispImage.Views"
+             xmlns:prism="http://prismlibrary.com/" 
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             >
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="ViewA" Foreground ="Red" Margin="10,10,10,10"></TextBlock>
+        </StackPanel>     
+    </Grid>
+</UserControl>

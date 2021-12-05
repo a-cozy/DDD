@@ -21,34 +21,24 @@ namespace MenuBar.ViewModels
             set { SetProperty(ref _ModeName, value); }
         }
         /// <summary>
-        /// IsChecked
-        /// </summary>
-        private bool _IsChecked;
-        public bool IsChecked
-        {
-            get { return _IsChecked; }
-            set { SetProperty(ref _IsChecked, value); }
-        }
-        /// <summary>
         /// 画像を開くコマンド
         /// </summary>
         public DelegateCommand ChangedCommand { get; private set; }
 
         public MenuButtonViewModel(IUnityContainer service)
         {
-            ModeName = "Aモード";
+            ModeName = " Aモード ";
 
             ChangedCommand = new DelegateCommand(() =>
             {
-                if (_IsChecked)
+                if (ModeName == " Aモード ")
                 {
-                    ModeName = "Aモード";
+                    ModeName = " Bモード ";
                 }
-                else 
+                else
                 {
-                    ModeName = "Bモード";
+                    ModeName = " Aモード ";
                 }
-
             });
 
         }

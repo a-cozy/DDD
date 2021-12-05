@@ -1,7 +1,5 @@
-﻿using Prism.Events;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DispImage
+namespace DispNavigat.Views
 {
     /// <summary>
-    /// UC_DispImage.xaml の相互作用ロジック
+    /// ViewTypeB.xaml の相互作用ロジック
     /// </summary>
-    public partial class UC_DispImage : UserControl
+    public partial class ViewTypeB : UserControl
     {
-        public UC_DispImage()
+        public ViewTypeB()
         {
             InitializeComponent();
         }

@@ -41,6 +41,7 @@ namespace DispImage.ViewModels
             get { return _SelTabIdx; }
             set { SetProperty(ref _SelTabIdx, value); }
         }
+        public DelegateCommand<string> ShowViewCommand { get; }
         /// <summary>
         /// 
         /// </summary>
@@ -71,6 +72,11 @@ namespace DispImage.ViewModels
                 UC_DispImage.Add(tmp);
                 SelTabIdx = UC_DispImage.Count() - 1;
             };
+
+            this.ShowViewCommand = new DelegateCommand<string>((d) =>
+            {
+                _RegionManager.RequestNavigate("ContentRegion", d);
+            });
         }
         /// <summary>
         /// ViewModel削除

@@ -1,8 +1,12 @@
-﻿using MainModel;
+﻿using DispNavigat;
+using ImageCtrlDisp.Views;
+using MainModel;
 using Microsoft.Xaml.Behaviors.Core;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Ioc;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -90,6 +94,7 @@ namespace DispImage.ViewModels
             get { return _MinSlider; }
             set { SetProperty(ref _MinSlider, value); }
         }
+           public DelegateCommand<string> ShowViewCommand { get; }
         /// <summary>
         /// 閉じるコマンド
         /// </summary>
@@ -110,63 +115,77 @@ namespace DispImage.ViewModels
         /// 画像倍率調整I/F
         /// </summary>
         private readonly IImageScaleControlor _Adjuter;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly IRegionManager _RegionManager;
+
+        //private readonly IContainerRegistry _ContainerRegistry;
         /// <summary>
         /// 画像表示ユーザーコントロール
         /// </summary>
         public UC_DispImageViewModel(IUnityContainer service)
         {
-            
-            _ImageSource = new BitmapImage();
-            _ImageDisplay = service.Resolve<IImageDisplay>();
-            _ImageDisplay.RequestRes += (s, e) =>
-            {
-                if (Title == null)
-                {
-                    Title = Path.GetFileName((s as ImageDisplay).ImageDispInf.ImgPath);
-                    ImageSource = (s as ImageDisplay).ImageDispInf.DispImage;
-                    Debug.WriteLine($"{nameof(DispImage)}の{Title} ViewModel imageloaded");
-                }
-            };
-            _ImageDisplay.EndCalScale += (s, e) => 
-            {
-                if(!IsSetMinScale)
-                {
-                    IsSetMinScale = (s as ImageDisplay).ImageDispInf.IsSetRangeScalse;
-                    MaxSlider = (s as ImageDisplay).ImageDispInf.MaxDispScale;
-                    MinSlider = (s as ImageDisplay).ImageDispInf.MinDispScale;
-                    ZoomScale = (s as ImageDisplay).ImageDispInf.CurrentDispScale;
-                }
-            };
+            _RegionManager = service.Resolve<IRegionManager>();
+            _RegionManager.RegisterViewWithRegion("ContentRegion", typeof(DispNavigat.Views.ViewA));
 
-            _Adjuter = service.Resolve<IImageScaleControlor>();
+            //this.ShowViewCommand = new DelegateCommand<string>((d) =>
+            //{
+            //    //_RegionManager.RequestNavigate("ContentRegion", d);
+            //});
 
-            FittingCmd = new ActionCommand((d) => 
-            {
-                Debug.WriteLine($"{Title} FittingCmd");
-            });
+            //_ImageSource = new BitmapImage();
+            //_ImageDisplay = service.Resolve<IImageDisplay>();
+            //_ImageDisplay.RequestRes += (s, e) =>
+            //{
+            //    if (Title == null)
+            //    {
+            //        Title = Path.GetFileName((s as ImageDisplay).ImageDispInf.ImgPath);
+            //        ImageSource = (s as ImageDisplay).ImageDispInf.DispImage;
+            //        Debug.WriteLine($"{nameof(DispImage)}の{Title} ViewModel imageloaded");
+            //    }
+            //};
+            //_ImageDisplay.EndCalScale += (s, e) => 
+            //{
+            //    if(!IsSetMinScale)
+            //    {
+            //        IsSetMinScale = (s as ImageDisplay).ImageDispInf.IsSetRangeScalse;
+            //        MaxSlider = (s as ImageDisplay).ImageDispInf.MaxDispScale;
+            //        MinSlider = (s as ImageDisplay).ImageDispInf.MinDispScale;
+            //        ZoomScale = (s as ImageDisplay).ImageDispInf.CurrentDispScale;
+            //    }
+            //};
 
-            ScrollChanged = new ActionCommand((d) => 
-            {
-                if (!IsSetMinScale)
-                {
-                    _Adjuter.SetActualSize(
-                            (float)(d as ScrollViewer).ActualWidth,
-                            (float)(d as ScrollViewer).ActualHeight,
-                            ImageSource
-                            );
-                }
-            });
-            ImageLoaded = new ActionCommand((d) =>
-            {
-                if (!IsSetMinScale)
-                {
-                    _Adjuter.SetActualSize(
-                             (float)(d as ScrollViewer).ActualWidth,
-                             (float)(d as ScrollViewer).ActualHeight,
-                                 ImageSource
-                             );
-                }
-            });
+            //_Adjuter = service.Resolve<IImageScaleControlor>();
+
+            //FittingCmd = new ActionCommand((d) => 
+            //{
+            //    Debug.WriteLine($"{Title} FittingCmd");
+            //});
+
+            //ScrollChanged = new ActionCommand((d) => 
+            //{
+            //    if (!IsSetMinScale)
+            //    {
+            //        _Adjuter.SetActualSize(
+            //                (float)(d as ScrollViewer).ActualWidth,
+            //                (float)(d as ScrollViewer).ActualHeight,
+            //                ImageSource
+            //                );
+            //    }
+            //});
+            //ImageLoaded = new ActionCommand((d) =>
+            //{
+            //    if (!IsSetMinScale)
+            //    {
+            //        _Adjuter.SetActualSize(
+            //                 (float)(d as ScrollViewer).ActualWidth,
+            //                 (float)(d as ScrollViewer).ActualHeight,
+            //                     ImageSource
+            //                 );
+            //    }
+            //});
 
             ClearCmd = new DelegateCommand(() =>
             {
@@ -176,7 +195,7 @@ namespace DispImage.ViewModels
                 Closed.Invoke(this, new EventArgs());
             });
 
-            _ImageDisplay.DoRequest();
+            //_ImageDisplay.DoRequest();
         }
         ///// <summary>
         ///// 最小設定値を設定

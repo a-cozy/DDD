@@ -2,6 +2,7 @@
 using DispApp.Views;
 using DispImage;
 using DispImageWindow;
+using DispNavigat;
 //using ImageControler;
 using ImageCtrlDisp;
 using MainModel;
@@ -53,6 +54,9 @@ namespace DispApp
 
             containerRegistry.RegisterSingleton<IImageDisplay, ImageDisplay>();
 
+
+
+
             containerRegistry.RegisterInstance(this.Container);
         }
 
@@ -64,13 +68,16 @@ namespace DispApp
             moduleCatalog.AddModule<MenuBarModule>(InitializationMode.WhenAvailable);
             //センタ用
             moduleCatalog.AddModule<DispImageModule>(InitializationMode.WhenAvailable);
+            //センタ用
+            moduleCatalog.AddModule<DispNavigatModule>(InitializationMode.WhenAvailable);
+            
             ////画像制御用
             //moduleCatalog.AddModule<ImageControlerModule>(InitializationMode.WhenAvailable);
             ////画像制御用
             //moduleCatalog.AddModule<ImageCtrlDispModule>(InitializationMode.WhenAvailable);
             ////画像制御用
             //moduleCatalog.AddModule<DispImageWindowModule>(InitializationMode.WhenAvailable);
-            
+
 
 
             //データグリッド用

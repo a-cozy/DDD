@@ -13,7 +13,15 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              >
     <Grid>
-        <ScrollViewer x:Name="scrollviewer"
+        <ContentControl prism:RegionManager.RegionName="ContentRegion"/>
+        <!--<StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding ShowViewCommand}" CommandParameter="ViewAA">Show ViewA</Button>
+                <Button Command="{Binding ShowViewCommand}" CommandParameter="ViewBB">Show ViewB</Button>
+            </StackPanel>
+            <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+        </StackPanel>-->
+        <!--<ScrollViewer x:Name="scrollviewer"
                       HorizontalScrollBarVisibility="Auto" 
                       VerticalScrollBarVisibility="Auto" 
                       >
@@ -56,6 +64,6 @@
                 MinValueSlider="{Binding MinSlider}"
                 ScaleNum="{Binding ZoomScale, Mode=TwoWay}"
                 />
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </UserControl>

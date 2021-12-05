@@ -5,6 +5,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,28 +15,25 @@ namespace ImageCtrlDisp.ViewModels
 {
     public class ImageCtrlDispViewModel : BindableBase
     {
-        private readonly ILoadImager _LoadImager;
 
-        private readonly IRegionManager _RegionManager;
+        //private readonly IRegionManager _RegionManager;
+
+        public DelegateCommand<string> ShowViewCommand { get; }
+
 
         public ImageCtrlDispViewModel(IUnityContainer service)
+
         {
-            _RegionManager = service.Resolve<IRegionManager>();
-            _RegionManager.RegisterViewWithRegion(
-                nameof(DispImageWindowModule), typeof(DispImageWindow.Views.DispImageWindow));
+            Debug.WriteLine($"{nameof(ImageCtrlDispViewModel)}is callsed");
 
-            //_LoadImager = service.Resolve<ILoadImager>();
-            //_LoadImager.ClearImage += (s, e) =>
-            //{
-            //    var dd = _RegionManager.Regions.ToList().Find(
-            //        p => p.Name == nameof(DispImageWindowModule));
+            //_RegionManager = service.Resolve<IRegionManager>();
 
-            //    dd.RemoveAll();
+            this.ShowViewCommand = new DelegateCommand<string>(this.ShowView);
 
-            //    _RegionManager.RegisterViewWithRegion(
-            //        nameof(DispImageWindowModule), typeof(DispImageWindow.Views.DispImageWindow));
-
-            //};
+        }
+        public void ShowView(string viewName)
+        {
+            //_RegionManager.RequestNavigate("ContentRegion", viewName);
         }
     }
 }

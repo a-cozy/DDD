@@ -134,6 +134,10 @@
       <Project>{67DF8B4F-10BC-4447-A603-32B8CBBA5FC3}</Project>
       <Name>DispImage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DispNavigat\DispNavigat.csproj">
+      <Project>{268C9469-0E05-4EB2-B1EC-E9BFE14910CE}</Project>
+      <Name>DispNavigat</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImageCtrlDisp\ImageCtrlDisp.csproj">
       <Project>{A3F2E42B-59E6-4893-B5C5-F7DBB1FDB427}</Project>
       <Name>ImageCtrlDisp</Name>

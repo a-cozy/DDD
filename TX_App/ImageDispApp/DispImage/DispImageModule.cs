@@ -15,7 +15,8 @@ namespace DispImage
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            
+            //containerRegistry.RegisterForNavigation<ViewAA>();
+            //containerRegistry.RegisterForNavigation<ViewBB>();
         }
     }
 }
